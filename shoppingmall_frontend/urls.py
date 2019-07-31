@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+import shoppingmall.views as shoppingmall_views
+
 urlpatterns = [
+    path('shoppingmall/index', shoppingmall_views.index),
+
     path('admin/', admin.site.urls),
 ]
