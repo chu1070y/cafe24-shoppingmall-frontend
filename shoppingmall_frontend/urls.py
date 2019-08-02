@@ -17,9 +17,12 @@ from django.contrib import admin
 from django.urls import path
 
 import shoppingmall.views as shoppingmall_views
+import user.views as user_views
 
 urlpatterns = [
     path('shoppingmall/index', shoppingmall_views.index),
+
+    path('user/login', user_views.login),
 
     path('admin/', admin.site.urls),
 ]
