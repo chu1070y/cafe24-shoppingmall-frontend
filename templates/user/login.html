@@ -13,30 +13,31 @@
 
 			<div class="row">
 
-				<div class="col-sm-10 col-md-4 p-b-30 m-l-r-auto">
-						아이디
-						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="name" placeholder="Id" />
-						</div>
-						비밀번호
-						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Password" />
-						</div>
+				<form class="col-sm-10 col-md-4 p-b-30 m-l-r-auto" id="loginform">
+					{% csrf_token %}
+					아이디
+					<div class="bo4 of-hidden size15 m-b-20">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="id" placeholder="Id" />
+					</div>
+					비밀번호
+					<div class="bo4 of-hidden size15 m-b-20">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="password" name="pw" placeholder="Password" />
+					</div>
 
-						<div class="of-hidden size15 m-b-20">
-							<!-- Button -->
-							<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
-								로그인
-							</button>
-						</div>
+					<div class="of-hidden size15 m-b-20">
+						<!-- Button -->
+						<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" id="loginbtn">
+							로그인
+						</button>
+					</div>
 
-						<div class="of-hidden size15 m-b-20">
-							<!-- Button -->
-							<button class="flex-c-m size2 bg2 bo-rad-23 hov1 m-text2 trans-0-4" onclick="location.href='/user/join'">
-								회원가입
-							</button>
-						</div>
-				</div>
+					<div class="of-hidden size15 m-b-20">
+						<!-- Button -->
+						<button class="flex-c-m size2 bg2 bo-rad-23 hov1 m-text2 trans-0-4" id="joinbtn" onclick="location.href='/user/join'">
+							회원가입
+						</button>
+					</div>
+				</form>
 
 			</div>
 		</div>
@@ -48,6 +49,16 @@
 <script>
 $(document).ready(function(){
 
+	var loginform = $("#loginform");
+
+	$("#loginbtn").click(function(e){
+		e.preventDefault();
+		loginform.attr("action","/user/login").attr("method","post").submit();
+	});
+
+	$("#joinbtn").click(function(e){
+		e.preventDefault();
+	});
 });
 </script>
 {% endblock %}
