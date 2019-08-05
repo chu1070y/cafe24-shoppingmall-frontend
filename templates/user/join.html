@@ -12,7 +12,8 @@
 
 			<div class="row">
 
-				<form class="col-sm-10 col-md-4 p-b-30 m-l-r-auto">
+				<form class="col-sm-10 col-md-4 p-b-30 m-l-r-auto" id="joinform">
+					{% csrf_token %}
 					<div class="size15">
 						<input class="sizefull m-text8" type="text" value="(필수입력사항)" readonly />
 					</div>
@@ -28,19 +29,19 @@
 						비밀번호
 					</div>
 					<div class="bo4 of-hidden size15 m-b-20">
-						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Password" />
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="pw" placeholder="Password" />
 					</div>
 					이름
 					<div class="bo4 of-hidden size15 m-b-20">
-						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Name" />
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="name" placeholder="Name" />
 					</div>
 					이메일
 					<div class="bo4 of-hidden size15 m-b-20">
-						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Email" />
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="email" placeholder="Email" />
 					</div>
 					휴대전화
 					<div class="bo4 of-hidden size15 m-b-20">
-						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Phone" />
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="tel_phone" placeholder="Phone" />
 					</div>
 
 					<div class="size15">
@@ -49,7 +50,7 @@
 
 					일반전화
 					<div class="bo4 of-hidden size15 m-b-20">
-						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Tel" />
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="tel_home" placeholder="Tel" />
 					</div>
 
 					성별
@@ -60,16 +61,17 @@
 						<label class="btn btn-danger">
 							<input type="radio" name="gender" value="w"> 여성
 						</label>
+							<input style="display:none;" type="radio" name="gender" value="" checked="checked">
 					</div>
 
 					생년월일
 					<div class="bo4 of-hidden size15 m-b-20">
-						<input class="sizefull s-text7 p-l-22 p-r-22" type="date" name="bday">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="date" name="birthdate">
 					</div>
 
-					<div class="of-hidden size15 m-b-20">
+					<div class="of-hidden size15 m-b-20" >
 						<!-- Button -->
-						<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+						<button id="joinbtn" class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
 							회원가입
 						</button>
 					</div>
@@ -79,11 +81,39 @@
 		</div>
 	</section>
 
+<input type="hidden" id="result" value="{{result}}">
 {% endblock %}
 
 {% block script %}
 <script>
 $(document).ready(function(){
+	var joinform = $("#joinform");
+	var result = $("#result").val();
+
+	var check = 0;
+
+	console.log(result);
+
+	if(result != ""){
+		result = JSON.parse(result);
+	}
+
+	if(result.result=='fail'){
+
+		var data = result.message.split('/');
+		var keys = {};
+
+		data.forEach(function (item, index, array) {
+			if(index == (data.length-1)){return;}
+			keys[item] = 1;
+		});
+
+		alert(Object.keys(keys));
+	}
+
+	if(result.data=='중복 아이디'){
+		alert(result.data);
+	}
 
 	$("#checkId").click(function(e){
 		e.preventDefault();
@@ -91,17 +121,19 @@ $(document).ready(function(){
 		var id = $("#id").val();
 
 		 $.ajax({
-			url: '/user/checkId/' + id,
+			url: '/user/checkId',
 			type : 'GET',
+			data : {'id': id },
 			success : function(result){
 
 				if (result.result == "fail"){
-					alert("서버 통신 오류");
+					alert("아이디는 4~18글자로 영어나 숫자만 입력해주세요");
 				}
 				else if(result.data=="중복"){
 					alert("중복 아이디");
 				} else {
 					alert("사용 가능 아이디");
+					check = 1;
 				}
 			},
 			fail: function(e){
@@ -110,7 +142,19 @@ $(document).ready(function(){
 
 		  });// end ajax
 
-	});
+	});// end checkId
+
+	$("#joinbtn").click(function(e){
+		e.preventDefault();
+
+		if(check==0){
+			alert("아이디 중복체크 후 회원가입 해주세요")
+			return;
+		}
+
+		joinform.attr("action","/user/join").attr("method","post").submit();
+
+	});// end joinbtn
 
 });
 </script>
