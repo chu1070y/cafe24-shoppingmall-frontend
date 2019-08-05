@@ -1,4 +1,6 @@
 {% extends '../base.html' %}
+
+
 {% block content %}
 	<!-- Blog -->
 	<section class="blog bgwhite p-t-94 p-b-65">
@@ -21,16 +23,16 @@
 							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Password" />
 						</div>
 
-						<div class="col-sm-10 col-md-4 p-b-30 m-l-r-auto">
+						<div class="of-hidden size15 m-b-20">
 							<!-- Button -->
 							<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
 								로그인
 							</button>
 						</div>
 
-						<div class="col-sm-10 col-md-4 p-b-30 m-l-r-auto">
+						<div class="of-hidden size15 m-b-20">
 							<!-- Button -->
-							<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+							<button class="flex-c-m size2 bg2 bo-rad-23 hov1 m-text2 trans-0-4" onclick="location.href='/user/join'">
 								회원가입
 							</button>
 						</div>
@@ -40,4 +42,12 @@
 		</div>
 	</section>
 
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+
+});
+</script>
 {% endblock %}
