@@ -1,0 +1,110 @@
+{% extends '../base.html' %}
+
+{% block content %}
+	<!-- Blog -->
+	<section class="blog bgwhite p-t-94 p-b-65">
+		<div class="container">
+			<div class="sec-title p-b-52">
+				<h3 class="m-text5 t-center">
+					회원가입
+				</h3>
+			</div>
+
+			<div class="row">
+
+				<form class="col-sm-10 col-md-4 p-b-30 m-l-r-auto">
+					<div class="size15">
+						<input class="sizefull m-text8" type="text" value="(필수입력사항)" readonly />
+					</div>
+					아이디<br/>
+					<div class="bo4 size15 m-b-20" style="width: 70%; float: left;">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="id" name="id" placeholder="Id" />
+					</div>
+					<div class="btn btn-success" style="width: 30%; height: 50px; ">
+							<button class="text-default" style="color:white; line-height: 2.0;" id="checkId">중복체크</button>
+					</div>
+
+					<div class="of-hidden size2" style="height:25px">
+						비밀번호
+					</div>
+					<div class="bo4 of-hidden size15 m-b-20">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Password" />
+					</div>
+					이름
+					<div class="bo4 of-hidden size15 m-b-20">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Name" />
+					</div>
+					이메일
+					<div class="bo4 of-hidden size15 m-b-20">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Email" />
+					</div>
+					휴대전화
+					<div class="bo4 of-hidden size15 m-b-20">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Phone" />
+					</div>
+
+					<div class="size15">
+						<input class="sizefull m-text8" type="text" value="(선택입력사항)" readonly />
+					</div>
+
+					일반전화
+					<div class="bo4 of-hidden size15 m-b-20">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Tel" />
+					</div>
+
+					성별
+					<div class="of-hidden size15 m-b-20">
+						<label class="btn btn-primary">
+							<input type="radio" name="gender" value="m"> 남성
+						</label>
+						<label class="btn btn-danger">
+							<input type="radio" name="gender" value="w"> 여성
+						</label>
+					</div>
+
+					생년월일
+					<div class="bo4 of-hidden size15 m-b-20">
+						<input class="sizefull s-text7 p-l-22 p-r-22" type="date" name="bday">
+					</div>
+
+					<div class="of-hidden size15 m-b-20">
+						<!-- Button -->
+						<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+							회원가입
+						</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</section>
+
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+
+	$("#checkId").click(function(e){
+		e.preventDefault();
+		e.stopPropagation();
+
+		var id = $("#id").val();
+
+		 $.ajax({
+			url: '/user/checkId/' + id,
+			type : 'GET',
+			success : function(result){
+				console.log(result);
+			},
+			fail: function(e){
+			    console.log("fail");
+			}
+
+		  });// end ajax
+
+	});
+
+});
+</script>
+{% endblock %}

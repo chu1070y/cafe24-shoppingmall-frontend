@@ -23,6 +23,8 @@ urlpatterns = [
     path('shoppingmall/index', shoppingmall_views.index),
 
     path('user/login', user_views.login),
+    path('user/join', user_views.join),
+    path('user/checkId/<str:id>', user_views.checkId),
 
     path('admin/', admin.site.urls),
 ]

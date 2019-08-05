@@ -35,6 +35,7 @@
 	<link rel="stylesheet" type="text/css" href="/assets/css/main.css">
 <!--===============================================================================================-->
 </head>
+{% block css %} {% endblock %}
 <body class="animsition">
 
 	<!-- Header -->
@@ -70,7 +71,7 @@
 
 			<div class="wrap_header">
 				<!-- Logo -->
-				<a href="shoppingmall/index" class="logo">
+				<a href="/shoppingmall/index" class="logo">
 					<img src="/assets/images/icons/logo.png" alt="IMG-LOGO">
 				</a>
 
@@ -116,7 +117,7 @@
 
 				<!-- Header Icon -->
 				<div class="header-icons">
-					<a href="#" class="header-wrapicon1 dis-block">
+					<a href="/user/login" class="header-wrapicon1 dis-block">
 						<img src="/assets/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
 					</a>
 
@@ -214,7 +215,7 @@
 			<div class="btn-show-menu">
 				<!-- Header Icon mobile -->
 				<div class="header-icons-mobile">
-					<a href="#" class="header-wrapicon1 dis-block">
+					<a href="/user/login" class="header-wrapicon1 dis-block">
 						<img src="/assets/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
 					</a>
 
@@ -606,6 +607,7 @@
 
 <!--===============================================================================================-->
 	<script src="/assets/js/main.js"></script>
+    {% block script %} {% endblock %}
 
 </body>
 </html>
