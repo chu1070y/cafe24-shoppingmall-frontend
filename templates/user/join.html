@@ -20,8 +20,8 @@
 					<div class="bo4 size15 m-b-20" style="width: 70%; float: left;">
 						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="id" name="id" placeholder="Id" />
 					</div>
-					<div class="btn btn-success" style="width: 30%; height: 50px; ">
-							<button class="text-default" style="color:white; line-height: 2.0;" id="checkId">중복체크</button>
+					<div class="btn btn-success" style="width: 30%; height: 50px;" id="checkId">
+							<button class="text-default" style="color:white; line-height: 2.0;" >중복체크</button>
 					</div>
 
 					<div class="of-hidden size2" style="height:25px">
@@ -87,7 +87,6 @@ $(document).ready(function(){
 
 	$("#checkId").click(function(e){
 		e.preventDefault();
-		e.stopPropagation();
 
 		var id = $("#id").val();
 
@@ -95,7 +94,15 @@ $(document).ready(function(){
 			url: '/user/checkId/' + id,
 			type : 'GET',
 			success : function(result){
-				console.log(result);
+
+				if (result.result == "fail"){
+					alert("서버 통신 오류");
+				}
+				else if(result.data=="중복"){
+					alert("중복 아이디");
+				} else {
+					alert("사용 가능 아이디");
+				}
 			},
 			fail: function(e){
 			    console.log("fail");
