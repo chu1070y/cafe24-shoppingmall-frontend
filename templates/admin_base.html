@@ -45,6 +45,7 @@
       NProgress.configure({ showSpinner: false });
       NProgress.start();
 
+
 </script>
 
 <div class="mobile-sticky-body-overlay"></div>
@@ -101,19 +102,15 @@
 
 
                                 <li>
-                                    <a class="sidenav-item-link" href="/admin/user">
+                                    <a class="sidenav-item-link" href="/manager/user">
                                         <span class="nav-text">회원관리</span>
-
                                     </a>
                                 </li>
 
 
                                 <li>
-                                    <a class="sidenav-item-link" href="analytics.html">
-                                        <span class="nav-text">Analytics</span>
-
-                                        <span class="badge badge-success">new</span>
-
+                                    <a class="sidenav-item-link" href="/manager/productadd">
+                                        <span class="nav-text">상품등록</span>
                                     </a>
                                 </li>
 
@@ -155,7 +152,7 @@
         </div>
     </aside>
 
-<div class="page-wrapper">
+    <div class="page-wrapper">
         <!-- Header -->
         <header class="main-header " id="header">
             <nav class="navbar navbar-static-top navbar-expand-lg">
@@ -173,6 +170,11 @@
 
                 <div class="navbar-right ">
                     <ul class="nav navbar-nav">
+                        <li class="mr-3">
+                            <a class="btn btn-linkedin btn-outline text" href="/manager/logout" style="line-height: 2.0;">logout
+                            </a>
+                        </li>
+
                         <!-- Github Link Button -->
                         <li class="github-link mr-3">
                             <a class="btn btn-outline-secondary btn-sm"
@@ -190,30 +192,30 @@
 
         </header>
 
-    {% block content %} {% endblock %}
-</div>
+        {% block content %} {% endblock %}
+    </div>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCn8TFXGg17HAUcNpkwtxxyT9Io9B_NcM" defer></script>
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/assets/vendor/toaster/toastr.min.js"></script>
-<script src="/assets/vendor/slimscrollbar/jquery.slimscroll.min.js"></script>
-<script src="/assets/vendor/charts/Chart.min.js"></script>
-<script src="/assets/vendor/ladda/spin.min.js"></script>
-<script src="/assets/vendor/ladda/ladda.min.js"></script>
-<script src="/assets/vendor/jquery-mask-input/jquery.mask.min.js"></script>
-<script src="/assets/vendor/select2/js/select2.min.js"></script>
-<script src="/assets/vendor/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
-<script src="/assets/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
-<script src="/assets/vendor/daterangepicker/moment.min.js"></script>
-<script src="/assets/vendor/daterangepicker/daterangepicker.js"></script>
-<script src="/assets/vendor/jekyll-search.min.js"></script>
-<script src="/assets/js/sleek.js"></script>
-<script src="/assets/js/chart.js"></script>
-<script src="/assets/js/date-range.js"></script>
-<script src="/assets/js/map.js"></script>
-<script src="/assets/js/custom.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCn8TFXGg17HAUcNpkwtxxyT9Io9B_NcM" defer></script>
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/toaster/toastr.min.js"></script>
+    <script src="/assets/vendor/slimscrollbar/jquery.slimscroll.min.js"></script>
+    <script src="/assets/vendor/charts/Chart.min.js"></script>
+    <script src="/assets/vendor/ladda/spin.min.js"></script>
+    <script src="/assets/vendor/ladda/ladda.min.js"></script>
+    <script src="/assets/vendor/jquery-mask-input/jquery.mask.min.js"></script>
+    <script src="/assets/vendor/select2/js/select2.min.js"></script>
+    <script src="/assets/vendor/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="/assets/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+    <script src="/assets/vendor/daterangepicker/moment.min.js"></script>
+    <script src="/assets/vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="/assets/vendor/jekyll-search.min.js"></script>
+    <script src="/assets/js/sleek.js"></script>
+    <script src="/assets/js/chart.js"></script>
+    <script src="/assets/js/date-range.js"></script>
+    <script src="/assets/js/map.js"></script>
+    <script src="/assets/js/custom.js"></script>
 
 
 </body>

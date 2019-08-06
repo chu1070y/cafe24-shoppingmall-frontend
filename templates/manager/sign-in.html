@@ -65,7 +65,7 @@
                 <div class="card-body p-5">
 
                     <h4 class="text-dark mb-5">관리자 로그인</h4>
-                    <form action="/admin/login" method="post">
+                    <form action="/manager/login" method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="form-group col-md-12 mb-4">
@@ -92,16 +92,17 @@
         </p>
     </div>
 </div>
-<input type="hidden" id="fail" value="{{fail}}"/>
+{% if request.GET.result == 'fail' %}
 <script>
-    $(document).ready(function(){
-	    var fail = $("#fail").val();
-
-	    if(fail=='fail'){
-	    	alert("아이디 또는 비밀번호가 틀립니다.");
-	    }
-    });
+	alert('아이디 또는 비밀번호가 틀립니다.');
 </script>
+{% endif %}
+
+{% if request.GET.result == 'nologin' %}
+<script>
+	alert('로그인이 필요합니다.');
+</script>
+{% endif %}
 
 </body>
 </html>

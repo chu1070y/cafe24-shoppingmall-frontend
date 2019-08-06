@@ -29,8 +29,11 @@ urlpatterns = [
     path('user/info', user_views.info),
     path('user/logout', user_views.logout),
 
-    path('admin/login', admin_views.login),
-    path('admin/user', admin_views.user),
+    path('manager/user', admin_views.user),
+    path('manager/productadd', admin_views.logout),
+    path('manager/', admin_views.login),
+    path('manager/login', admin_views.login),
+    path('manager/logout', admin_views.logout),
 
     path('admin/', admin.site.urls),
 ]
