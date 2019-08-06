@@ -42,7 +42,7 @@
 			</div>
 		</div>
 	</section>
-
+<input type="hidden" id="fail" value="{{fail}}"
 {% endblock %}
 
 {% block script %}
@@ -50,6 +50,11 @@
 $(document).ready(function(){
 
 	var loginform = $("#loginform");
+	var fail = $("#fail").val();
+
+	if(fail=='fail'){
+		alert("아이디 또는 비밀번호가 틀립니다.");
+	}
 
 	$("#loginbtn").click(function(e){
 		e.preventDefault();
