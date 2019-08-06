@@ -5,6 +5,9 @@
         padding: 0;
     }
 
+
+
+
 </style>
 
 {% endblock %}
@@ -81,75 +84,48 @@
                 <div class="card-body">
                     <form>
                         <div class="form-row">
-                            <div class="col-md-12 mb-3">
+                            <div class="col-md-12 mb-3 form-group">
                                 <label class="text-dark font-weight-medium" for="validationServer01">상품명</label>
                                 <span class="mb-2 mr-2 badge badge-pill badge-primary">필수</span>
-                                <input type="text" class="form-control" id="validationServer01" placeholder="First name"
-                                       value="Md" required="">
+                                <input type="text" class="form-control" id="validationServer01" name="name"
+                                       placeholder="상품명" required="">
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
-                            <div class="col-md-12 mb-3">
-                                <label class="text-dark font-weight-medium" for="validationServer02">상품 가격</label>
-                                <input type="text" class="form-control" id="validationServer02" placeholder="Last name"
-                                       value="Rahad" required="">
+                            <div class="row">
+                                <div class="col-md-6 mb-3 form-group">
+                                    <label class="text-dark font-weight-medium" for="validationServer02">상품 가격</label>
+                                    <span class="mb-2 mr-2 badge badge-pill badge-primary">필수</span>
+                                    <input type="text" class="form-control" id="validationServer02" name="price"
+                                           placeholder="상품 가격" required="">
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3 form-group">
+                                    <label class="text-dark font-weight-medium">할인 가격</label>
+                                    <input type="text" class="form-control" name="sale_price" placeholder="할인 가격">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3 form-group">
+                                <label for="exampleFormControlTextarea1">상품 설명</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" name="description"
+                                          rows="3"></textarea>
+                            </div>
+
+                            <div class="col-md-12 mb-3 form-group">
+                                <label class="text-dark font-weight-medium" for="validationServer01">상품명</label>
+                                <span class="mb-2 mr-2 badge badge-pill badge-primary">필수</span>
+                                <input type="text" class="form-control" id="validationServer01" name="name"
+                                       placeholder="상품명" required="">
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
-                            <div class="col-md-12 mb-3">
-                                <label for="validationServerUsername">Username</label>
-                                <input type="text" class="form-control" id="validationServerUsername"
-                                       placeholder="Username" aria-describedby="inputGroupPrepend3" required="">
-                                <div class="invalid-feedback">
-                                    Please choose a username.
-                                </div>
-                            </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-6 mb-3">
-                                <label for="validationServer03">City</label>
-                                <input type="text" class="form-control" id="validationServer03" placeholder="City"
-                                       required="">
-                                <div class="invalid-feedback">
-                                    Please provide a valid city.
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationServer04">State</label>
-                                <input type="text" class="form-control" id="validationServer04" placeholder="State"
-                                       required="">
-                                <div class="invalid-feedback">
-                                    Please provide a valid state.
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationServer05">Zip</label>
-                                <input type="text" class="form-control" id="validationServer05" placeholder="Zip"
-                                       required="">
-                                <div class="invalid-feedback">
-                                    Please provide a valid zip.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="heading3">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse3"
-                                        aria-expanded="true" aria-controls="collapse3">
-                                    Hat Black Suits
-                                </button>
-                            </div>
-                            <div id="collapse3" class="collapse show" aria-labelledby="heading3"
-                                 data-parent="#accordion3" style="">
-                                <div class="card-body">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.enim
-                                    ad minim veniam quis nostrud exer citation ullamco laboris nisi ut aliquip ex ea
-                                    commodo consequat duis aute.
-                                </div>
-                            </div>
-                        </div>
+
+
                         <button class="btn btn-primary" type="submit">Submit form</button>
                     </form>
                 </div>
@@ -167,13 +143,16 @@
                             {% for category in category_list.data %}
                             <div class="card">
                                 <div class="card-header" id="heading{{ forloop.counter }}">
-                                    <button class="btn btn-link collapsed categoryListBtn" data-toggle="collapse" data-no="{{category.category_no}}"
-                                            data-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                                    <button class="btn btn-link collapsed categoryListBtn" data-toggle="collapse"
+                                            data-no="{{category.category_no}}"
+                                            data-target="#collapse{{ forloop.counter }}" aria-expanded="false"
+                                            aria-controls="collapse{{ forloop.counter }}">
                                         {{category.category_name}}
                                     </button>
                                 </div>
 
-                                <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}"
+                                <div id="collapse{{ forloop.counter }}" class="collapse"
+                                     aria-labelledby="heading{{ forloop.counter }}"
                                      data-parent="#accordion{{ forloop.counter }}" style="">
                                     <ul class="card-body" id="category{{category.category_no}}">
                                     </ul>
@@ -184,6 +163,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-6">
                 <div class="card card-default">
                     <div class="card-header card-header-border-bottom">
@@ -242,6 +222,9 @@
 
 
 
+
+
+
     </script>
 </footer>
 
@@ -284,6 +267,9 @@ $(document).ready(function(){
         categoryadd.attr("action","/manager/categoryadd").attr("method","post").submit();
     });
 });
+
+
+
 
 </script>
 {% endblock %}
