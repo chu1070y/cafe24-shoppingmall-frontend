@@ -117,9 +117,15 @@
 
 				<!-- Header Icon -->
 				<div class="header-icons">
+					{% if request.session.authuser is None %}
 					<a href="/user/login" class="header-wrapicon1 dis-block">
 						<img src="/assets/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
 					</a>
+					{% else %}
+					<a href="/user/info" class="header-wrapicon1 dis-block">
+						{{ request.session.authuser.name}}
+					</a>
+					{% endif %}
 
 					<span class="linedivide1"></span>
 

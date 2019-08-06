@@ -10,9 +10,13 @@ from user.utils import RestAPI
 rest_api = RestAPI()
 
 
+def info(request):
+    return render(request, 'user/info.html')
+
+
 def logout(request):
     del request.session['authuser']
-    return redirect('/')
+    return redirect('/shoppingmall/index')
 
 
 def login(request):

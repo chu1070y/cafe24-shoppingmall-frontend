@@ -1,0 +1,41 @@
+{% extends '../base.html' %}
+
+{% block content %}
+	<!-- Blog -->
+	<section class="blog bgwhite p-t-94 p-b-65">
+		<div class="container">
+			<div class="sec-title p-b-52">
+				<h3 class="m-text5 t-center">
+					로그아웃
+				</h3>
+			</div>
+
+			<div class="row">
+
+				<form class="col-sm-10 col-md-4 p-b-30 m-l-r-auto" id="updateform">
+					{% csrf_token %}
+
+
+					<div class="of-hidden size15 m-b-20" >
+						<!-- Button -->
+						<button id="logoutbtn" class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" onclick="location.href='/user/logout'">
+							로그아웃
+						</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</section>
+
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+	$("#logoutbtn").click(function(e){
+		e.preventDefault();
+	});//end logoutbtn
+});
+</script>
+{% endblock %}
