@@ -4,7 +4,9 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from user.views import rest_api
+from shoppingmall_frontend.utils import RestAPI
+
+rest_api = RestAPI()
 
 
 def login(request):
@@ -15,9 +17,8 @@ def login(request):
         if result_body['result'] == 'fail':
             return render(request, 'admin/sign-in.html', {'fail': 'fail'})
 
-        authuser = result_body['data']
-        print(result_body['data'])
-        request.session['authuser'] = authuser
+        authadmin = result_body['data']
+        request.session['authadmin'] = authadmin
 
         return redirect('/admin/user')
 
@@ -25,4 +26,11 @@ def login(request):
 
 
 def user(request):
-    return render(request, 'admin/user.html')
+    result = json.loads(rest_api.api_get("/api/user/list"))
+
+    return render(request, 'admin/user.html', {'result': result})
+
+
+def logout(request):
+    del request.session['authadmin']
+    return redirect('/shoppingmall/index')

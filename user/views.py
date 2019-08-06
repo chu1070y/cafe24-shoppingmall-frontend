@@ -1,11 +1,10 @@
 import json
 
-from django.forms import model_to_dict
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from user.utils import RestAPI
+from shoppingmall_frontend.utils import RestAPI
 
 rest_api = RestAPI()
 
