@@ -10,6 +10,11 @@ from user.utils import RestAPI
 rest_api = RestAPI()
 
 
+def logout(request):
+    del request.session['authuser']
+    return redirect('/')
+
+
 def login(request):
     if request.method == "POST":
         result = rest_api.api_post("/api/user/login", json.dumps({'id': request.POST['id'], 'pw': request.POST['pw']}))
@@ -30,15 +35,25 @@ def login(request):
 def join(request):
 
     if request.method == "POST":
+
+        if request.POST['tel_home'] == "":
+            tel_home = None
+
+        if request.POST['gender'] == "":
+            gender = None
+
+        if request.POST['birthdate'] == "":
+            birthdate = None
+
         result = rest_api.api_post("/api/user/registerMember", json.dumps({
             "id": request.POST['id'],
             'pw': request.POST['pw'],
             'name': request.POST['name'],
             'email': request.POST['email'],
-            'tel_home': request.POST['tel_home'],
+            'tel_home': tel_home,
             'tel_phone': request.POST['tel_phone'],
-            'gender': request.POST['gender'],
-            'birthdate': request.POST['birthdate']
+            'gender': gender,
+            'birthdate': birthdate
         }))
 
         result_body = json.loads(result)
