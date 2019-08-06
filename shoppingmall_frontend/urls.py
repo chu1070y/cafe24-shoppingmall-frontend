@@ -18,6 +18,7 @@ from django.urls import path
 
 import shoppingmall.views as shoppingmall_views
 import user.views as user_views
+import admin.views as admin_views
 
 urlpatterns = [
     path('shoppingmall/index', shoppingmall_views.index),
@@ -27,6 +28,9 @@ urlpatterns = [
     path('user/checkId', user_views.checkId),
     path('user/info', user_views.info),
     path('user/logout', user_views.logout),
+
+    path('admin/login', admin_views.login),
+    path('admin/user', admin_views.user),
 
     path('admin/', admin.site.urls),
 ]
