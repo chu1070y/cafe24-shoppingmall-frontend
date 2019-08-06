@@ -121,3 +121,7 @@ USE_TZ = True
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'statics'),)
 STATIC_URL = '/assets/'
+
+SESSION_COOKIE_AGE = 7200  # 2시간동안 동작 없으면 세션 타임아웃
+SESSION_SAVE_EVERY_REQUEST = True  # False이면 SESSION_COOKIE_AGE 설정한 시간 넘으면 무조건 세션 사라짐
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # 브라우저 전체 닫으면
