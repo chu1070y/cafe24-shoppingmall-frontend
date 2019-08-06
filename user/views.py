@@ -72,7 +72,7 @@ def join(request):
     return render(request, 'user/join.html')
 
 
-def checkId(request, id=""):
+def checkId(request):
     result = rest_api.api_get("/api/user/checkId", {"id": request.GET['id']})
 
     return HttpResponse(result, content_type='application/json')

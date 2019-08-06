@@ -1,6 +1,6 @@
 import json
 
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 
@@ -37,3 +37,33 @@ def user(request):
 def logout(request):
     del request.session['authadmin']
     return redirect('/manager/')
+
+
+@login_decorator
+def product(request):
+
+    category_list = json.loads(rest_api.api_get("/api/category/list"))
+
+    return render(request, 'manager/product.html', {'category_list': category_list})
+
+
+@login_decorator
+def categoryadd(request):
+    parent = None
+    if request.POST['parent'] != '0':
+        parent = request.POST['parent']
+
+    result = rest_api.api_post("/api/category/add",
+                               json.dumps({'parent': parent, 'category_name': request.POST['category_name']}))
+    print(result)
+
+    return redirect('/manager/product')
+
+
+@login_decorator
+def lowlist(request):
+
+    result = rest_api.api_get("/api/category/lowList", {'parent': request.GET['parent']})
+    print(result)
+
+    return HttpResponse(result, content_type='application/json')

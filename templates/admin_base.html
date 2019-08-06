@@ -38,7 +38,7 @@
     <![endif]-->
     <script src="/assets/vendor/nprogress/nprogress.js"></script>
 </head>
-
+{% block css %} {% endblock %}
 
 <body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
 <script>
@@ -109,8 +109,8 @@
 
 
                                 <li>
-                                    <a class="sidenav-item-link" href="/manager/productadd">
-                                        <span class="nav-text">상품등록</span>
+                                    <a class="sidenav-item-link" href="/manager/product">
+                                        <span class="nav-text">상품관리</span>
                                     </a>
                                 </li>
 
@@ -216,7 +216,7 @@
     <script src="/assets/js/date-range.js"></script>
     <script src="/assets/js/map.js"></script>
     <script src="/assets/js/custom.js"></script>
-
+    {% block script %} {% endblock %}
 
 </body>
 </html>

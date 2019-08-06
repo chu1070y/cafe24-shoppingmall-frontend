@@ -30,10 +30,13 @@ urlpatterns = [
     path('user/logout', user_views.logout),
 
     path('manager/user', admin_views.user),
-    path('manager/productadd', admin_views.logout),
     path('manager/', admin_views.login),
     path('manager/login', admin_views.login),
     path('manager/logout', admin_views.logout),
+    path('manager/product', admin_views.product),
+
+    path('manager/categoryadd', admin_views.categoryadd),
+    path('manager/lowlist', admin_views.lowlist),
 
     path('admin/', admin.site.urls),
 ]

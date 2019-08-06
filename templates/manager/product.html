@@ -1,0 +1,289 @@
+{% extends '../admin_base.html' %}
+{% block css %}
+<style>
+    .accordion-header-border-bottom .card-header .btn, .accordion-header-border-bottom .card-header a{
+        padding: 0;
+    }
+
+</style>
+
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="content">
+        <div class="breadcrumb-wrapper">
+            <h1>상품관리</h1>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2>상품 목록</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover ">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td scope="row">1</td>
+                            <td>Lucia</td>
+                            <td>Christ</td>
+                            <td>@Lucia</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">2</td>
+                            <td>Catrin</td>
+                            <td>Seidl</td>
+                            <td>@catrin</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">3</td>
+                            <td>Lilli</td>
+                            <td>Kirsh</td>
+                            <td>@lilli</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">4</td>
+                            <td>Else</td>
+                            <td>Voigt</td>
+                            <td>@voigt</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">5</td>
+                            <td>Ursel</td>
+                            <td>Harms</td>
+                            <td>@ursel</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">6</td>
+                            <td>Anke</td>
+                            <td>Sauter</td>
+                            <td>@Anke</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2>상품 등록</h2>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="col-md-12 mb-3">
+                                <label class="text-dark font-weight-medium" for="validationServer01">상품명</label>
+                                <span class="mb-2 mr-2 badge badge-pill badge-primary">필수</span>
+                                <input type="text" class="form-control" id="validationServer01" placeholder="First name"
+                                       value="Md" required="">
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="text-dark font-weight-medium" for="validationServer02">상품 가격</label>
+                                <input type="text" class="form-control" id="validationServer02" placeholder="Last name"
+                                       value="Rahad" required="">
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="validationServerUsername">Username</label>
+                                <input type="text" class="form-control" id="validationServerUsername"
+                                       placeholder="Username" aria-describedby="inputGroupPrepend3" required="">
+                                <div class="invalid-feedback">
+                                    Please choose a username.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="validationServer03">City</label>
+                                <input type="text" class="form-control" id="validationServer03" placeholder="City"
+                                       required="">
+                                <div class="invalid-feedback">
+                                    Please provide a valid city.
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationServer04">State</label>
+                                <input type="text" class="form-control" id="validationServer04" placeholder="State"
+                                       required="">
+                                <div class="invalid-feedback">
+                                    Please provide a valid state.
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationServer05">Zip</label>
+                                <input type="text" class="form-control" id="validationServer05" placeholder="Zip"
+                                       required="">
+                                <div class="invalid-feedback">
+                                    Please provide a valid zip.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="heading3">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse3"
+                                        aria-expanded="true" aria-controls="collapse3">
+                                    Hat Black Suits
+                                </button>
+                            </div>
+                            <div id="collapse3" class="collapse show" aria-labelledby="heading3"
+                                 data-parent="#accordion3" style="">
+                                <div class="card-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.enim
+                                    ad minim veniam quis nostrud exer citation ullamco laboris nisi ut aliquip ex ea
+                                    commodo consequat duis aute.
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card card-default">
+                    <div class="card-header card-header-border-bottom">
+                        <h2>카테고리 목록</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="accordion4" class="accordion accordion-header-border-bottom ">
+                            {% for category in category_list.data %}
+                            <div class="card">
+                                <div class="card-header" id="heading{{ forloop.counter }}">
+                                    <button class="btn btn-link collapsed categoryListBtn" data-toggle="collapse" data-no="{{category.category_no}}"
+                                            data-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                                        {{category.category_name}}
+                                    </button>
+                                </div>
+
+                                <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}"
+                                     data-parent="#accordion{{ forloop.counter }}" style="">
+                                    <ul class="card-body" id="category{{category.category_no}}">
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card card-default">
+                    <div class="card-header card-header-border-bottom">
+                        <h2>카테고리 등록</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" id="categoryadd" action="/manager/categoryadd">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>상위 카테고리</label>
+                                    <select name="parent" class="form-control">
+                                        <option value=0>default(상위 카테고리 등록)</option>
+                                        {% for category in category_list.data %}
+                                        <option value={{category.category_no}}>{{category.category_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mb-3 form-group">
+                                    <label class="text-dark font-weight-medium">카테고리명</label>
+                                    <input type="text" class="form-control" name="category_name"
+                                           placeholder="Category Name" required="">
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" id="categoryadd_btn" type="submit">등록</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<footer class="footer mt-auto">
+    <div class="copyright bg-white">
+        <p>
+            &copy; <span id="copy-year">2019</span> Copyright Sleek Dashboard Bootstrap Template by
+            <a
+                    class="text-primary"
+                    href="http://www.iamabdus.com/"
+                    target="_blank"
+            >Abdus</a
+            >.
+        </p>
+    </div>
+    <script>
+                var d = new Date();
+                var year = d.getFullYear();
+                document.getElementById("copy-year").innerHTML = year;
+
+
+
+
+    </script>
+</footer>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+
+    var categoryadd = $("#categoryadd")
+
+    $(".categoryListBtn").click(function(e){
+        e.preventDefault();
+        var no = $(this).data('no');
+        var categoryNoId = '#category' + $(this).data('no');
+
+        $.ajax({
+			url: '/manager/lowlist',
+			type : 'GET',
+			data : {'parent': no },
+			success : function(result){
+                $(categoryNoId).html("");
+                result.data.forEach(function (item, index) {
+                    $(categoryNoId).append('<li style="padding-left: 20px; margin-bottom: 10px;">' + item.category_name + '</li>');
+                });
+
+			},
+			fail: function(e){
+			    console.log("fail categoryListBtn");
+			}
+
+		  });// end ajax
+    });//end categoryListBtn
+
+    $("#categoryadd_btn").click(function(e){
+        e.preventDefault();
+
+        categoryadd.attr("action","/manager/categoryadd").attr("method","post").submit();
+    });
+});
+
+</script>
+{% endblock %}
