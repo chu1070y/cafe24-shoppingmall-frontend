@@ -1,9 +1,7 @@
 import json
-import os
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
 
 # Create your views here.
 from shoppingmall_frontend.decorator import login_decorator
@@ -31,7 +29,6 @@ def login(request):
 @login_decorator
 def user(request):
     result = json.loads(rest_api.api_get("/api/user/list"))
-
     return render(request, 'manager/user.html', {'result': result})
 
 
@@ -42,11 +39,27 @@ def logout(request):
 
 @login_decorator
 def product(request):
+    result = ''
 
-    product_list = json.loads(rest_api.api_get("/api/product/list"))
+    if request.method == "POST":
+        data = product_result(request)
+        result = json.loads(rest_api.api_post("/api/product/add", json.dumps(data)))
+
+        if result['result'] == 'success':
+            return redirect('/manager/productlist')
+
     category_list = json.loads(rest_api.api_get("/api/category/list"))
 
-    return render(request, 'manager/product.html', {'category_list': category_list, 'product_list': product_list})
+    return render(request, 'manager/product.html',
+                  {'category_list': category_list, 'result': result})
+
+
+@login_decorator
+def productlist(request):
+    product_list = json.loads(rest_api.api_get("/api/product/list"))
+
+    return render(request, 'manager/productlist.html',
+                  {'product_list': product_list})
 
 
 @login_decorator
@@ -68,11 +81,3 @@ def lowlist(request):
     return HttpResponse(result, content_type='application/json')
 
 
-@login_decorator
-def productadd(request):
-    data = product_result(request)
-    print(data)
-    result = rest_api.api_post("/api/product/add", json.dumps(data))
-    print(result)
-
-    return redirect('/manager/product')

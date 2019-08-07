@@ -39,7 +39,7 @@ urlpatterns = [
 
     path('manager/categoryadd', admin_views.categoryadd),
     path('manager/lowlist', admin_views.lowlist),
-    path('manager/productadd', admin_views.productadd),
+    path('manager/productlist', admin_views.productlist),
 
     path('admin/', admin.site.urls),
 ]

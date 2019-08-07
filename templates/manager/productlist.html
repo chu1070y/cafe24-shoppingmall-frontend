@@ -1,0 +1,179 @@
+{% extends '../admin_base.html' %}
+{% block css %}
+<style>
+    .accordion-header-border-bottom .card-header .btn, .accordion-header-border-bottom .card-header a{
+        padding: 0;
+    }
+
+
+</style>
+
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="content">
+        <div class="breadcrumb-wrapper">
+            <h1>상품목록</h1>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2>상품 목록</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover ">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">상품코드</th>
+                            <th scope="col">상품명</th>
+                            <th scope="col">상품가격</th>
+                            <th scope="col">할인가격</th>
+                            <th scope="col">진열상태</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in product_list.data.productList %}
+                        <tr>
+                            <td scope="row">{{product.no}}</td>
+                            <td>{{product.code}}</td>
+                            <td>{{product.name}}</td>
+                            <td>{{product.price}}</td>
+                            <td>{{product.sale_price}}</td>
+                            <td>{{product.show_product}}</td>
+                            <td style="padding: 3px;">
+                                <div class="dropdown show d-inline-block widget-dropdown">
+                                    <a class="dropdown-toggle icon-burger-mini" href="" role="button"
+                                       id="dropdown-recent-order1" data-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false" data-display="static"></a>
+                                    <ul class="dropdown-menu dropdown-menu-right"
+                                        aria-labelledby="dropdown-recent-order1" style="top: 28px;">
+                                        <li class="dropdown-item">
+                                            <a href="#">수정</a>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <a href="#">제거</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer mt-auto">
+    <div class="copyright bg-white">
+        <p>
+            &copy; <span id="copy-year">2019</span> Copyright Sleek Dashboard Bootstrap Template by
+            <a
+                    class="text-primary"
+                    href="http://www.iamabdus.com/"
+                    target="_blank"
+            >Abdus</a
+            >.
+        </p>
+    </div>
+    <script>
+                var d = new Date();
+                var year = d.getFullYear();
+                document.getElementById("copy-year").innerHTML = year;
+    </script>
+</footer>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+    var productadd = $("#productadd");
+    var categoryadd = $("#categoryadd");
+    var optionlistform = $("#optionlistform");
+
+    var optionUse = $("input:radio[name=option_use]");
+    var stockUse = $("input:radio[name=stock_use]");
+
+    optionUse.change(function(e){
+        e.preventDefault();
+
+        if($(this).val()==0){
+            $("#optionform2").html("");
+            $("#optionlist").attr("style","display:none;");
+        } else {
+            $("input:radio[name=stock_use][value='0']").prop('checked', true);
+            $("#stockform2").html("");
+            $("#optionform2").html($("#optionform1").html());
+            $("#optionlist").attr("style","");
+        }
+    });
+
+    stockUse.change(function(e){
+        e.preventDefault();
+
+        if($(this).val()==0){
+            $("#stockform2").html("");
+        } else {
+            $("input:radio[name=option_use][value='0']").prop('checked', true);
+            $("#optionform2").html("");
+            $("#optionlist").attr("style","display:none;");
+            $("#stockform2").html($("#stockform1").html());
+        }
+
+        //
+    });
+
+    $("#productaddBtn").click(function(e){
+        e.preventDefault();
+        productadd.attr("action","/manager/product").attr("method","post").submit();
+    });
+
+    $("#optionBtn").click(function(e){
+        e.preventDefault();
+
+    });
+
+    $(".categoryListBtn").click(function(e){
+        e.preventDefault();
+        var no = $(this).data('no');
+        var categoryNoId = '#category' + $(this).data('no');
+
+        $.ajax({
+			url: '/manager/lowlist',
+			type : 'GET',
+			data : {'parent': no },
+			success : function(result){
+                $(categoryNoId).html("");
+                result.data.forEach(function (item, index) {
+                    $(categoryNoId).append('<li style="padding-left: 20px; margin-bottom: 10px;">' + item.category_name + '</li>');
+                });
+
+			},
+			fail: function(e){
+			    console.log("fail categoryListBtn");
+			}
+
+		  });// end ajax
+    });//end categoryListBtn
+
+    $("#categoryadd_btn").click(function(e){
+        e.preventDefault();
+
+        categoryadd.attr("action","/manager/categoryadd").attr("method","post").submit();
+    });
+});
+
+
+
+
+
+
+</script>
+{% endblock %}
