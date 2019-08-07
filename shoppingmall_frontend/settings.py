@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '5o*v6y)oh90c&set!)mo_7t%l1t4$boi#@6fxn&wn#-xhqrv3)'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -71,7 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shoppingmall_frontend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -81,7 +78,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -101,7 +97,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -115,7 +110,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -125,3 +119,6 @@ STATIC_URL = '/assets/'
 SESSION_COOKIE_AGE = 7200  # 2시간동안 동작 없으면 세션 타임아웃
 SESSION_SAVE_EVERY_REQUEST = True  # False이면 SESSION_COOKIE_AGE 설정한 시간 넘으면 무조건 세션 사라짐
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # 브라우저 전체 닫으면
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = "D:\shoppingmall-upload"

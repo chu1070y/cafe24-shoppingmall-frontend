@@ -6,6 +6,7 @@
     }
 
 
+
 </style>
 
 {% endblock %}
@@ -80,7 +81,7 @@
                     <h2>상품 등록</h2>
                 </div>
                 <div class="card-body">
-                    <form id="productadd">
+                    <form id="productadd" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-row">
                             <div class="col-md-12 mb-3 form-group">
@@ -113,15 +114,25 @@
                                           rows="3"></textarea>
                             </div>
 
-                            <div class="col-md-12 mb-3 form-group">
-                                <label class="text-dark font-weight-medium" for="validationServer03">상품명</label>
-                                <span class="mb-2 mr-2 badge badge-pill badge-primary">필수</span>
-                                <input type="text" class="form-control" id="validationServer03" name="name"
-                                       placeholder="상품명" required="">
-                                <div class="valid-feedback">
-                                    Looks good!
+                            <div class="col-md-12">
+                                <label class="text-dark font-weight-medium"></label>
+                                <div class="form-group row">
+                                    <div class="col-6 col-md-3 text-left" style="max-width: 200px">
+                                        <label>상품 진열여부</label>
+                                    </div>
+                                    <div class="col-12 col-md-9 row">
+                                        <label class="control control-radio" style="margin-left: 20px;">진열안함
+                                            <input type="radio" name="show_product" value="0" checked="checked">
+                                            <div class="control-indicator"></div>
+                                        </label>
+                                        <label class="control control-radio" style="margin-left: 20px;">진열함
+                                            <input type="radio" name="show_product" value="1">
+                                            <div class="control-indicator"></div>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="card-header card-header-border-bottom"></div>
@@ -253,7 +264,7 @@
                                     </div>
                                     <div class="col-12 col-md-9 row">
                                         <div class="form-group" style="margin-left: 20px;">
-                                            <input type="file" name="mainImg" class="form-control-file">
+                                            <input type="file" name="addImg" class="form-control-file" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -394,6 +405,7 @@
 
 
 
+
     </script>
 </footer>
 
@@ -480,6 +492,7 @@ $(document).ready(function(){
         categoryadd.attr("action","/manager/categoryadd").attr("method","post").submit();
     });
 });
+
 
 
 </script>

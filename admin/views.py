@@ -1,4 +1,5 @@
 import json
+import os
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -6,7 +7,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from shoppingmall_frontend.decorator import login_decorator
-from shoppingmall_frontend.utils import RestAPI
+from shoppingmall_frontend.utils import RestAPI, product_result
 
 rest_api = RestAPI()
 
@@ -55,15 +56,22 @@ def categoryadd(request):
 
     result = rest_api.api_post("/api/category/add",
                                json.dumps({'parent': parent, 'category_name': request.POST['category_name']}))
-    print(result)
 
     return redirect('/manager/product')
 
 
 @login_decorator
 def lowlist(request):
-
     result = rest_api.api_get("/api/category/lowList", {'parent': request.GET['parent']})
-    print(result)
 
     return HttpResponse(result, content_type='application/json')
+
+
+@login_decorator
+def productadd(request):
+    data = product_result(request)
+    print(data)
+    result = rest_api.api_post("/api/product/add", json.dumps(data))
+    print(result)
+
+    return redirect('/manager/product')
