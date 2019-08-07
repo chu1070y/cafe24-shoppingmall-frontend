@@ -10,7 +10,5 @@ rest_api = RestAPI()
 
 
 def index(request):
-    product_list = json.loads(rest_api.api_get("/api/product/list"))
-    print(MEDIA_ROOT)
-
+    product_list = json.loads(rest_api.api_get("/api/product/mainlist"))
     return render(request, 'shoppingmall/index.html', {'product_list': product_list})
