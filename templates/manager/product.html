@@ -6,8 +6,6 @@
     }
 
 
-
-
 </style>
 
 {% endblock %}
@@ -82,7 +80,8 @@
                     <h2>상품 등록</h2>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form id="productadd">
+                        {% csrf_token %}
                         <div class="form-row">
                             <div class="col-md-12 mb-3 form-group">
                                 <label class="text-dark font-weight-medium" for="validationServer01">상품명</label>
@@ -115,9 +114,9 @@
                             </div>
 
                             <div class="col-md-12 mb-3 form-group">
-                                <label class="text-dark font-weight-medium" for="validationServer01">상품명</label>
+                                <label class="text-dark font-weight-medium" for="validationServer03">상품명</label>
                                 <span class="mb-2 mr-2 badge badge-pill badge-primary">필수</span>
-                                <input type="text" class="form-control" id="validationServer01" name="name"
+                                <input type="text" class="form-control" id="validationServer03" name="name"
                                        placeholder="상품명" required="">
                                 <div class="valid-feedback">
                                     Looks good!
@@ -125,8 +124,143 @@
                             </div>
                         </div>
 
+                        <div class="card-header card-header-border-bottom"></div>
+                        <div class="card-header card-header-border-bottom">
+                            <h2>카테고리</h2>
+                        </div>
+                        <div class="row col-md-12">
+                            <div class="form-group col-md-6">
+                                <label>상위 카테고리</label>
+                                <select name="parent" class="form-control">
+                                    {% for category in category_list.data %}
+                                    <option value={{category.category_no}}>{{category.category_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>하위 카테고리</label>
+                                <select name="parent" class="form-control" disabled>
+                                    {% for category in category_list.data %}
+                                    <option value={{category.category_no}}>{{category.category_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
 
-                        <button class="btn btn-primary" type="submit">Submit form</button>
+
+                        </div>
+
+
+                        <div class="card-header card-header-border-bottom"></div>
+                        <div class="card-header card-header-border-bottom">
+                            <h2>재고/옵션</h2>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label class="text-dark font-weight-medium"></label>
+                                <div class="form-group row">
+                                    <div class="col-6 col-md-3 text-left" style="max-width: 200px">
+                                        <label>재고 사용여부</label>
+                                    </div>
+                                    <div class="col-12 col-md-9 row">
+                                        <label class="control control-radio" style="margin-left: 20px;">사용안함
+                                            <input type="radio" name="stock_use" value="0" checked="checked">
+                                            <div class="control-indicator"></div>
+                                        </label>
+                                        <label class="control control-radio" style="margin-left: 20px;">사용함
+                                            <input type="radio" name="stock_use" value="1">
+                                            <div class="control-indicator"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="stockform2">
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <label class="text-dark font-weight-medium"></label>
+                                <div class="form-group row">
+                                    <div class="col-6 col-md-3 text-left" style="max-width: 200px">
+                                        <label>옵션 사용여부</label>
+                                    </div>
+                                    <div class="col-12 col-md-9 row">
+                                        <label class="control control-radio" style="margin-left: 20px;">사용안함
+                                            <input type="radio" name="option_use" value="0" checked="checked">
+                                            <div class="control-indicator"></div>
+                                        </label>
+                                        <label class="control control-radio" style="margin-left: 20px;">사용함
+                                            <input type="radio" name="option_use" value="1">
+                                            <div class="control-indicator"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="optionform2"></div>
+
+                            <div class="col-md-12 mb-3 form-group" style="display: none;" id="optionlist">
+                                <label class="text-dark font-weight-medium">옵션 목록</label>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">옵션코드</th>
+                                            <th scope="col">추가가격</th>
+                                            <th scope="col">재고여부</th>
+                                            <th scope="col">재고수량</th>
+                                            <th scope="col">삭제</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-header card-header-border-bottom"></div>
+                        <div class="card-header card-header-border-bottom">
+                            <h2>상품이미지 등록</h2>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label class="text-dark font-weight-medium"></label>
+                                <div class="form-group row">
+                                    <div class="col-6 col-md-3 text-left" style="max-width: 200px">
+                                        <label>대표이미지(one)</label>
+                                    </div>
+                                    <div class="col-12 col-md-9 row">
+                                        <div class="form-group" style="margin-left: 20px;">
+                                            <input type="file" name="mainImg" class="form-control-file">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label class="text-dark font-weight-medium"></label>
+                                <div class="form-group row">
+                                    <div class="col-6 col-md-3 text-left" style="max-width: 200px">
+                                        <label>추가이미지(multi)</label>
+                                    </div>
+                                    <div class="col-12 col-md-9 row">
+                                        <div class="form-group" style="margin-left: 20px;">
+                                            <input type="file" name="mainImg" class="form-control-file">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit" id="productaddBtn">상품 등록</button>
                     </form>
                 </div>
             </div>
@@ -199,6 +333,43 @@
         </div>
     </div>
 
+    <div id="stockform1" style="display:none;">
+        <div class="col-md-12 mb-3 form-group">
+            <label class="text-dark font-weight-medium">재고개수</label>
+            <input type="text" class="form-control" name="name" placeholder="재고개수">
+        </div>
+    </div>
+
+    <div id="optionlistform" style="display: none;">
+        <tr>
+            <td scope="row" id="optioncode">블랙/M/슬림핏</td>
+            <td><input type="text" class="form-control" name="add_price"></td>
+            <td><select name="stock_use" style="margin-top: 10px;">
+                <option value="0">NO</option>
+                <option value="1">YES</option>
+            </select></td>
+            <td><input type="text" class="form-control" name="stock_num"></td>
+            <td>
+                <button class="btn btn-sm btn-danger" type="submit">X</button>
+            </td>
+        </tr>
+    </div>
+
+    <div class="row col-md-12" id="optionform1" style="display:none;">
+        <div class="col-md-12 mb-3 form-group">
+            <label class="text-dark font-weight-medium">옵션명</label>
+            <input type="text" class="form-control" name="option_name" placeholder="옵션명">
+        </div>
+
+        <div class="col-md-12 mb-3 form-group">
+            <label class="text-dark font-weight-medium">세부옵션명-쉼표로 구분해주세요(ex)
+                black,white,red)</label>
+            <input type="text" class="form-control" name="detail_name" placeholder="세부옵션명">
+            <button class="btn btn-sm btn-success" type="submit" id="optionBtn" style="margin-top: 10px;">옵션 만들긔
+            </button>
+        </div>
+    </div>
+
 
 </div>
 
@@ -223,20 +394,62 @@
 
 
 
-
-
     </script>
 </footer>
 
 </div>
+
 
 {% endblock %}
 
 {% block script %}
 <script>
 $(document).ready(function(){
+    var productadd = $("#productadd");
+    var categoryadd = $("#categoryadd");
+    var optionlistform = $("#optionlistform");
 
-    var categoryadd = $("#categoryadd")
+    var optionUse = $("input:radio[name=option_use]");
+    var stockUse = $("input:radio[name=stock_use]");
+
+    optionUse.change(function(e){
+        e.preventDefault();
+
+        if($(this).val()==0){
+            $("#optionform2").html("");
+            $("#optionlist").attr("style","display:none;");
+        } else {
+            $("input:radio[name=stock_use][value='0']").prop('checked', true);
+            $("#stockform2").html("");
+            $("#optionform2").html($("#optionform1").html());
+            $("#optionlist").attr("style","");
+        }
+    });
+
+    stockUse.change(function(e){
+        e.preventDefault();
+
+        if($(this).val()==0){
+            $("#stockform2").html("");
+        } else {
+            $("input:radio[name=option_use][value='0']").prop('checked', true);
+            $("#optionform2").html("");
+            $("#optionlist").attr("style","display:none;");
+            $("#stockform2").html($("#stockform1").html());
+        }
+
+        //
+    });
+
+    $("#productaddBtn").click(function(e){
+        e.preventDefault();
+        productadd.attr("action","/manager/productadd").attr("method","post").submit();
+    });
+
+    $("#optionBtn").click(function(e){
+        e.preventDefault();
+
+    });
 
     $(".categoryListBtn").click(function(e){
         e.preventDefault();
@@ -267,8 +480,6 @@ $(document).ready(function(){
         categoryadd.attr("action","/manager/categoryadd").attr("method","post").submit();
     });
 });
-
-
 
 
 </script>
