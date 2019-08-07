@@ -43,9 +43,10 @@ def logout(request):
 @login_decorator
 def product(request):
 
+    product_list = json.loads(rest_api.api_get("/api/product/list"))
     category_list = json.loads(rest_api.api_get("/api/category/list"))
 
-    return render(request, 'manager/product.html', {'category_list': category_list})
+    return render(request, 'manager/product.html', {'category_list': category_list, 'product_list': product_list})
 
 
 @login_decorator

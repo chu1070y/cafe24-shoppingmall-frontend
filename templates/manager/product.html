@@ -27,48 +27,24 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">상품코드</th>
+                            <th scope="col">상품명</th>
+                            <th scope="col">상품가격</th>
+                            <th scope="col">할인가격</th>
+                            <th scope="col">진열상태</th>
                         </tr>
                         </thead>
                         <tbody>
+                        {% for product in product_list.data.productList %}
                         <tr>
-                            <td scope="row">1</td>
-                            <td>Lucia</td>
-                            <td>Christ</td>
-                            <td>@Lucia</td>
+                            <td scope="row">{{product.no}}</td>
+                            <td>{{product.code}}</td>
+                            <td>{{product.name}}</td>
+                            <td>{{product.price}}</td>
+                            <td>{{product.sale_price}}</td>
+                            <td>{{product.show_product}}</td>
                         </tr>
-                        <tr>
-                            <td scope="row">2</td>
-                            <td>Catrin</td>
-                            <td>Seidl</td>
-                            <td>@catrin</td>
-                        </tr>
-                        <tr>
-                            <td scope="row">3</td>
-                            <td>Lilli</td>
-                            <td>Kirsh</td>
-                            <td>@lilli</td>
-                        </tr>
-                        <tr>
-                            <td scope="row">4</td>
-                            <td>Else</td>
-                            <td>Voigt</td>
-                            <td>@voigt</td>
-                        </tr>
-                        <tr>
-                            <td scope="row">5</td>
-                            <td>Ursel</td>
-                            <td>Harms</td>
-                            <td>@ursel</td>
-                        </tr>
-                        <tr>
-                            <td scope="row">6</td>
-                            <td>Anke</td>
-                            <td>Sauter</td>
-                            <td>@Anke</td>
-                        </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
