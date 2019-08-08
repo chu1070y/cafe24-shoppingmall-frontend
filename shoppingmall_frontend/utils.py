@@ -52,6 +52,8 @@ def product_result(request):
     for detail in data.get('stock_use'):
         product_detail_form['stock_use'] = detail
 
+    change_data['productDetailList'].append(product_detail_form)
+
     # 이미지
     if img.get('mainImg') is not None:
         main_file = img.get('mainImg')
@@ -71,15 +73,13 @@ def product_result(request):
             file_upload(add_file, add_filename)
             change_data['productImgList'].append(product_img_form)
 
-    change_data['productDetailList'].append(product_detail_form)
-
     # 카테고리
     categorylist = []
     for category_no in data.getlist('category_no'):
         if category_no == '없음':
             continue
-        categorylist.append(category_no)
-    change_data['categoryList'] = categorylist
+        category_form = {'category_no': int(category_no)}
+        change_data['categoryList'].append(category_form)
 
     return change_data
 
