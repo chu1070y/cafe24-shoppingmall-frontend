@@ -74,7 +74,6 @@ def product_result(request):
             change_data['productImgList'].append(product_img_form)
 
     # 카테고리
-    categorylist = []
     for category_no in data.getlist('category_no'):
         if category_no == '없음':
             continue

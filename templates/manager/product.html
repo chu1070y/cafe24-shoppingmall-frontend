@@ -11,6 +11,23 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
 
 {% endblock %}
@@ -162,7 +179,53 @@
                                 </div>
                             </div>
 
-                            <div id="optionform2"></div>
+
+                            <div class="row col-md-12" id="optionform1" style="display:none;">
+                                <div class="row col-md-12">
+                                    <div class="col-md-3 form-group" style="margin-bottom: 0;">
+                                        <label class="text-dark font-weight-medium">[옵션명]</label>
+                                    </div>
+
+                                    <div class="col-md-9 form-group" style="margin-bottom: 0;">
+                                        <label class="text-dark font-weight-medium">[세부옵션명-쉼표로 구분해주세요(ex)
+                                            black,white,red)]</label>
+                                    </div>
+                                </div>
+                                <div id="optionform2" class="row col-md-12">
+                                    <div id="optionform3" class="row col-md-12">
+                                        <div class="col-md-3 mb-3 form-group">
+
+                                            <input type="text" class="form-control option_name" id="option_name"
+                                                   name="option_name"
+                                                   placeholder="옵션명">
+                                        </div>
+
+                                        <div class="col-md-9 mb-3 form-group">
+                                            <input type="text" class="form-control detail_name" id="detail_name"
+                                                   name="detail_name"
+                                                   placeholder="세부옵션명">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3 form-group">
+                                    <button class="btn btn-sm btn-primary" id="optionAddBtn" style="margin-top: 10px;">
+                                        옵션추가
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" id="optionDelBtn" style="margin-top: 10px;">
+                                        옵션삭제
+                                    </button>
+                                </div>
+                                <div class="col-md-12 mb-3 form-group">
+                                    <button class="btn btn-sm btn-success" id="optionCombineBtn"
+                                            style="margin-top: 10px;">
+                                        옵션품목 만들긔
+                                    </button>
+                                </div>
+
+
+                            </div>
+
 
                             <div class="col-md-12 mb-3 form-group" style="display: none;" id="optionlist">
                                 <label class="text-dark font-weight-medium">옵션 목록</label>
@@ -177,7 +240,7 @@
                                             <th scope="col">삭제</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="optionCombiList">
 
 
                                         </tbody>
@@ -232,8 +295,9 @@
                                 </div>
                             </div>
                         </div>
-
-                        <button class="btn btn-primary" type="submit" id="productaddBtn">상품 등록</button>
+                        <br/>
+                        <br/>
+                        <button class="btn btn-primary col-md-12" type="submit" id="productaddBtn">상품 등록</button>
                     </form>
                 </div>
             </div>
@@ -261,7 +325,7 @@
                                 <div id="collapse{{ forloop.counter }}" class="collapse"
                                      aria-labelledby="heading{{ forloop.counter }}"
                                      data-parent="#accordion{{ forloop.counter }}" style="">
-                                    <ul class="card-body" id="category{{category.category_no}}">
+                                    <ul class="card-body" id="category{{category.category_no}}" style="padding: 10px;">
                                     </ul>
                                 </div>
                             </div>
@@ -297,7 +361,7 @@
                                         Looks good!
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" id="categoryadd_btn" type="submit">등록</button>
+                                <button class="btn btn-primary col-md-12" id="categoryadd_btn" type="submit">등록</button>
                             </div>
                         </form>
                     </div>
@@ -313,36 +377,34 @@
         </div>
     </div>
 
-    <div id="optionlistform" style="display: none;">
-        <tr>
-            <td scope="row" id="optioncode">블랙/M/슬림핏</td>
-            <td><input type="text" class="form-control" name="add_price"></td>
-            <td><select name="stock_use" style="margin-top: 10px;">
-                <option value="0">NO</option>
-                <option value="1">YES</option>
-            </select></td>
-            <td><input type="text" class="form-control" name="stock_num"></td>
-            <td>
-                <button class="btn btn-sm btn-danger" type="submit">X</button>
-            </td>
-        </tr>
+    <div class="card-body" style="display: none;">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">옵션코드</th>
+                <th scope="col">추가가격</th>
+                <th scope="col">재고여부</th>
+                <th scope="col">재고수량</th>
+                <th scope="col">삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="optionlistform">
+                <td scope="row" id="optioncode">블랙/M/슬림핏</td>
+                <td><input type="text" class="form-control" name="add_price"></td>
+                <td><select name="stock_use" style="margin-top: 10px;">
+                    <option value="0">NO</option>
+                    <option value="1">YES</option>
+                </select></td>
+                <td><input type="text" class="form-control" name="stock_num"></td>
+                <td>
+                    <button class="btn btn-sm btn-danger" type="submit">X</button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
     </div>
-
-    <div class="row col-md-12" id="optionform1" style="display:none;">
-        <div class="col-md-12 mb-3 form-group">
-            <label class="text-dark font-weight-medium">옵션명</label>
-            <input type="text" class="form-control" name="option_name" placeholder="옵션명">
-        </div>
-
-        <div class="col-md-12 mb-3 form-group">
-            <label class="text-dark font-weight-medium">세부옵션명-쉼표로 구분해주세요(ex)
-                black,white,red)</label>
-            <input type="text" class="form-control" name="detail_name" placeholder="세부옵션명">
-            <button class="btn btn-sm btn-success" type="submit" id="optionBtn" style="margin-top: 10px;">옵션 만들긔
-            </button>
-        </div>
-    </div>
-
 
 </div>
 
@@ -366,9 +428,6 @@
 
 
 
-
-
-
     </script>
 </footer>
 
@@ -379,9 +438,6 @@
 {% if result.result == 'fail' %}
 <script>
 	alert('{{result.message}}');
-
-
-
 
 
 
@@ -404,12 +460,14 @@ $(document).ready(function(){
         e.preventDefault();
 
         if($(this).val()==0){
-            $("#optionform2").html("");
+            $("#optionform1").attr("style","display:none;");
             $("#optionlist").attr("style","display:none;");
+            $("#option_name").val("");
+            $("#detail_name").val("");
         } else {
             $("input:radio[name=stock_use][value='0']").prop('checked', true);
             $("#stockform2").html("");
-            $("#optionform2").html($("#optionform1").html());
+            $("#optionform1").attr("style","");
             $("#optionlist").attr("style","");
         }
     });
@@ -421,21 +479,89 @@ $(document).ready(function(){
             $("#stockform2").html("");
         } else {
             $("input:radio[name=option_use][value='0']").prop('checked', true);
-            $("#optionform2").html("");
+            $("#optionform1").attr("style","display:none;");
+            $("#option_name").val("");
+            $("#detail_name").val("");
             $("#optionlist").attr("style","display:none;");
             $("#stockform2").html($("#stockform1").html());
         }
 
-        //
     });
+
+    var optionnum = 1;
+    var optionid = 'option';
+
+    var optionform2 = $("#optionform2");
+    var optionform3 = $("#optionform3");
+
+    $("#optionAddBtn").click(function(e){
+        e.preventDefault();
+        var clone = optionform3.clone();
+
+        var tmp = optionid + optionnum;
+        optionnum++;
+
+        clone.attr('id', tmp);
+        optionform2.append(clone);
+    });
+
+    $("#optionDelBtn").click(function(e){
+        e.preventDefault();
+
+        optionnum--;
+        var tmp = optionid + optionnum;
+
+        $("#" + tmp).remove();
+    });
+
+    var optionlistform = $("#optionlistform");
+    var optioncode = $("#optioncode");
+    var optionCombiList = $("#optionCombiList");
+
+    $("#optionCombineBtn").click(function(e){
+        e.preventDefault();
+        var detail_name = $(".detail_name")
+
+        var combine_list = [];
+        var combine_atom_list = [];
+
+        detail_name.each(function(index, item){
+            console.log(index);
+            combine_atom_list.push(item.value.split(','));
+        });
+        combine_list = combination(combine_atom_list);
+        console.log(combine_list);
+
+        combine_list.forEach(function(element){
+            console.log(element);
+            optioncode.html(element);
+            var clone = optionlistform.clone();
+            console.log(clone);
+            optionCombiList.append(clone);
+        });
+
+    });
+
+    //조합 알고리즘
+    function combination(arr) {
+        if (arr.length == 1) {
+            return arr[0];
+        } else {
+        var result = [];
+        var calculate = combination(arr.slice(1));
+
+        for (var i = 0; i < calculate.length; i++) {
+            for (var j = 0; j < arr[0].length; j++) {
+                result.push(arr[0][j] + "/" + calculate[i]);
+            }
+        }
+        return result;
+        }
+    }
 
     $("#productaddBtn").click(function(e){
         e.preventDefault();
         productadd.attr("action","/manager/product").attr("method","post").submit();
-    });
-
-    $("#optionBtn").click(function(e){
-        e.preventDefault();
     });
 
     //이미지
@@ -518,6 +644,9 @@ $(document).ready(function(){
         categoryadd.attr("action","/manager/categoryadd").attr("method","post").submit();
     });
 });
+
+
+
 
 
 

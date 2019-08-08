@@ -1,6 +1,6 @@
 import json
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 
 # Create your views here.
 from shoppingmall_frontend.utils import RestAPI
@@ -24,4 +24,5 @@ def detail(request, no=1):
 
 
 def error404(request):
+
     return render(request, 'shoppingmall/404.html')
