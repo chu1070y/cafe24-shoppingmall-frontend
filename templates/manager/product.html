@@ -4,6 +4,13 @@
     .accordion-header-border-bottom .card-header .btn, .accordion-header-border-bottom .card-header a{
         padding: 0;
     }
+
+
+
+
+
+
+
 </style>
 
 {% endblock %}
@@ -60,11 +67,13 @@
                                         <label>상품 진열여부</label>
                                     </div>
                                     <div class="col-12 col-md-9 row">
-                                        <label class="control outlined control-radio radio-primary" style="margin-left: 20px;">진열안함
+                                        <label class="control outlined control-radio radio-primary"
+                                               style="margin-left: 20px;">진열안함
                                             <input type="radio" name="show_product" value="0" checked="checked">
                                             <div class="control-indicator"></div>
                                         </label>
-                                        <label class="control outlined control-radio radio-primary" style="margin-left: 20px;">진열함
+                                        <label class="control outlined control-radio radio-primary"
+                                               style="margin-left: 20px;">진열함
                                             <input type="radio" name="show_product" value="1">
                                             <div class="control-indicator"></div>
                                         </label>
@@ -81,18 +90,19 @@
                         <div class="row col-md-12">
                             <div class="form-group col-md-6">
                                 <label>상위 카테고리</label>
-                                <select name="parent" class="form-control">
+                                <select id="parentSelect" name="category_no" class="form-control">
+                                    <option>없음</option>
                                     {% for category in category_list.data %}
-                                    <option value={{category.category_no}}>{{category.category_name}}</option>
+                                    <option value={{category.category_no}}>
+                                        {{category.category_name}}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <label>하위 카테고리</label>
-                                <select name="parent" class="form-control" disabled>
-                                    {% for category in category_list.data %}
-                                    <option value={{category.category_no}}>{{category.category_name}}</option>
-                                    {% endfor %}
+                                <select name="category_no" class="form-control" id="lowCategory" disabled>
+                                    <option>없음</option>
                                 </select>
                             </div>
 
@@ -113,11 +123,13 @@
                                         <label>재고 사용여부</label>
                                     </div>
                                     <div class="col-12 col-md-9 row">
-                                        <label class="control outlined control-radio radio-primary" style="margin-left: 20px;">사용안함
+                                        <label class="control outlined control-radio radio-primary"
+                                               style="margin-left: 20px;">사용안함
                                             <input type="radio" name="stock_use" value="0" checked="checked">
                                             <div class="control-indicator"></div>
                                         </label>
-                                        <label class="control outlined control-radio radio-primary" style="margin-left: 20px;">사용함
+                                        <label class="control outlined control-radio radio-primary"
+                                               style="margin-left: 20px;">사용함
                                             <input type="radio" name="stock_use" value="1">
                                             <div class="control-indicator"></div>
                                         </label>
@@ -136,11 +148,13 @@
                                         <label>옵션 사용여부</label>
                                     </div>
                                     <div class="col-12 col-md-9 row">
-                                        <label class="control outlined control-radio radio-primary" style="margin-left: 20px;">사용안함
+                                        <label class="control outlined control-radio radio-primary"
+                                               style="margin-left: 20px;">사용안함
                                             <input type="radio" name="option_use" value="0" checked="checked">
                                             <div class="control-indicator"></div>
                                         </label>
-                                        <label class="control outlined control-radio radio-primary" style="margin-left: 20px;">사용함
+                                        <label class="control outlined control-radio radio-primary"
+                                               style="margin-left: 20px;">사용함
                                             <input type="radio" name="option_use" value="1">
                                             <div class="control-indicator"></div>
                                         </label>
@@ -183,7 +197,7 @@
                                 <label class="text-dark font-weight-medium"></label>
                                 <div class="form-group row">
                                     <div class="col-6 col-md-3 text-left" style="max-width: 200px">
-                                        <label>대표이미지(one)</label>
+                                        <label>대표이미지</label>
                                     </div>
                                     <div class="col-12 col-md-9 row">
                                         <div class="form-group" style="margin-left: 20px;">
@@ -199,11 +213,20 @@
                                 <label class="text-dark font-weight-medium"></label>
                                 <div class="form-group row">
                                     <div class="col-6 col-md-3 text-left" style="max-width: 200px">
-                                        <label>추가이미지(multi)</label>
+                                        <label>추가이미지</label>
+                                        <button type="button" class="mb-2 btn btn-twitter" id="addImgPlusBtn"
+                                                style="height: 20px; width: 20px; padding: 0; font-size: 0.7rem; vertical-align: none; margin-top: 5px;">
+                                            +
+                                        </button>
+                                        <button type="button" class="mb-2 btn btn-google-plus" id="addImgMinusBtn"
+                                                style="height: 20px; width: 20px; padding: 0; font-size: 0.7rem; vertical-align: none; margin-top: 5px;">
+                                            -
+                                        </button>
                                     </div>
                                     <div class="col-12 col-md-9 row">
-                                        <div class="form-group" style="margin-left: 20px;">
-                                            <input type="file" name="addImg" class="form-control-file" multiple>
+                                        <div class="form-group" style="margin-left: 20px;" id="addimgform">
+                                            <input type="file" name="addImg" class="form-control-file">
+
                                         </div>
                                     </div>
                                 </div>
@@ -339,6 +362,13 @@
                 var d = new Date();
                 var year = d.getFullYear();
                 document.getElementById("copy-year").innerHTML = year;
+
+
+
+
+
+
+
     </script>
 </footer>
 
@@ -349,6 +379,13 @@
 {% if result.result == 'fail' %}
 <script>
 	alert('{{result.message}}');
+
+
+
+
+
+
+
 </script>
 {% endif %}
 
@@ -357,10 +394,12 @@ $(document).ready(function(){
     var productadd = $("#productadd");
     var categoryadd = $("#categoryadd");
     var optionlistform = $("#optionlistform");
+    var addimgform = $("#addimgform");
 
     var optionUse = $("input:radio[name=option_use]");
     var stockUse = $("input:radio[name=stock_use]");
 
+    //옵션 및 재고
     optionUse.change(function(e){
         e.preventDefault();
 
@@ -397,7 +436,57 @@ $(document).ready(function(){
 
     $("#optionBtn").click(function(e){
         e.preventDefault();
+    });
 
+    //이미지
+    var inputnum = 1;
+    var inputid = 'addImg'
+    $("#addImgPlusBtn").click(function(e){
+        e.preventDefault();
+        var tmp = inputid + inputnum
+        inputnum++;
+        addimgform.append("<input type='file' name='addImg' id=" + tmp + " class='form-control-file'>");
+    });
+
+    $("#addImgMinusBtn").click(function(e){
+        e.preventDefault();
+        inputnum--;
+        var tmp = inputid + inputnum
+        $("#" + tmp).remove();
+
+    });
+
+    //카테고리
+    $("#parentSelect").change(function(e){
+        e.preventDefault();
+
+        var lowCategory = $("#lowCategory");
+        var categoryNo = $(this).val();
+
+        if (categoryNo == '없음'){
+            lowCategory.attr("disabled","disabled");
+            return;
+        }
+
+        lowCategory.html("<option>없음</option>");
+
+        $.ajax({
+			url: '/manager/lowlist',
+			type : 'GET',
+			data : {'parent': categoryNo },
+			success : function(result){
+                lowCategory.removeAttr("disabled");
+
+                result.data.forEach(function (item, index) {
+                    $(lowCategory).append('<option value='+ item.category_no +'>'+ item.category_name +'</option>');
+                });
+
+			},
+			fail: function(e){
+			    console.log("fail categoryListBtn");
+			}
+
+		  });// end ajax
     });
 
     $(".categoryListBtn").click(function(e){
@@ -429,6 +518,13 @@ $(document).ready(function(){
         categoryadd.attr("action","/manager/categoryadd").attr("method","post").submit();
     });
 });
+
+
+
+
+
+
+
 
 </script>
 {% endblock %}

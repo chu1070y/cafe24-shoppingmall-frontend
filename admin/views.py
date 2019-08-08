@@ -43,10 +43,12 @@ def product(request):
 
     if request.method == "POST":
         data = product_result(request)
-        result = json.loads(rest_api.api_post("/api/product/add", json.dumps(data)))
-
-        if result['result'] == 'success':
-            return redirect('/manager/productlist')
+        print(data)
+        return redirect('/manager/productlist')
+        # result = json.loads(rest_api.api_post("/api/product/add", json.dumps(data)))
+        #
+        # if result['result'] == 'success':
+        #     return redirect('/manager/productlist')
 
     category_list = json.loads(rest_api.api_get("/api/category/list"))
 

@@ -48,9 +48,11 @@ def product_result(request):
                            'stock_use': ''
                            }
 
+    # 재고 - 미완성 재고개수등 다른 것도 넣어야함... 옵션과 같이 해야함
     for detail in data.get('stock_use'):
         product_detail_form['stock_use'] = detail
 
+    # 이미지
     if img.get('mainImg') is not None:
         main_file = img.get('mainImg')
         main_filename = uuid_filename(main_file._name)
@@ -70,6 +72,14 @@ def product_result(request):
             change_data['productImgList'].append(product_img_form)
 
     change_data['productDetailList'].append(product_detail_form)
+
+    # 카테고리
+    categorylist = []
+    for category_no in data.getlist('category_no'):
+        if category_no == '없음':
+            continue
+        categorylist.append(category_no)
+    change_data['categoryList'] = categorylist
 
     return change_data
 
