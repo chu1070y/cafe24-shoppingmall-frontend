@@ -38,14 +38,17 @@ def login(request):
 def join(request):
 
     if request.method == "POST":
+        tel_home = request.POST['tel_home']
+        gender = request.POST['gender']
+        birthdate = request.POST['birthdate']
 
-        if request.POST['tel_home'] == "":
+        if tel_home == "":
             tel_home = None
 
-        if request.POST['gender'] == "":
+        if gender == "":
             gender = None
 
-        if request.POST['birthdate'] == "":
+        if birthdate == "":
             birthdate = None
 
         result = rest_api.api_post("/api/user/registerMember", json.dumps({
