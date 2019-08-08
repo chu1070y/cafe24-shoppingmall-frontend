@@ -24,6 +24,7 @@ import admin.views as admin_views
 
 urlpatterns = [
     path('shoppingmall/index', shoppingmall_views.index),
+    path('shoppingmall/detail/<int:no>', shoppingmall_views.detail),
 
     path('user/login', user_views.login),
     path('user/join', user_views.join),

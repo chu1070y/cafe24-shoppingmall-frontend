@@ -12,3 +12,8 @@ rest_api = RestAPI()
 def index(request):
     product_list = json.loads(rest_api.api_get("/api/product/mainlist"))
     return render(request, 'shoppingmall/index.html', {'product_list': product_list})
+
+
+def detail(request, no = 1):
+
+    return render(request, 'shoppingmall/product-detail.html')

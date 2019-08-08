@@ -141,6 +141,7 @@
                 <div class="tab-pane fade show active" id="best-seller" role="tabpanel">
                     <div class="row">
                         {% for product in product_list.data %}
+
                         <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
                             <!-- Block2 -->
                             <div class="block2">
@@ -163,7 +164,7 @@
                                 </div>
 
                                 <div class="block2-txt p-t-20">
-                                    <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+                                    <a href="/shoppingmall/detail/{{product.no}}" class="block2-name dis-block s-text3 p-b-5">
                                         {{product.name}}
                                     </a>
 
