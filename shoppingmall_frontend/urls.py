@@ -26,6 +26,8 @@ urlpatterns = [
     path('shoppingmall/index', shoppingmall_views.index),
     path('shoppingmall/detail/<int:no>', shoppingmall_views.detail),
 
+    path('shoppingmall/error404', shoppingmall_views.error404),
+
     path('user/login', user_views.login),
     path('user/join', user_views.join),
     path('user/checkId', user_views.checkId),
