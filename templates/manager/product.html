@@ -6,29 +6,6 @@
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </style>
 
 {% endblock %}
@@ -47,6 +24,7 @@
                 <div class="card-body">
                     <form id="productadd" enctype="multipart/form-data">
                         {% csrf_token %}
+                        <input type="hidden" id="test" name="test"/>
                         <div class="form-row">
                             <div class="col-md-12 mb-3 form-group">
                                 <label class="text-dark font-weight-medium" for="validationServer01">상품명</label>
@@ -127,13 +105,13 @@
 
                         </div>
 
-
                         <div class="card-header card-header-border-bottom"></div>
                         <div class="card-header card-header-border-bottom">
                             <h2>재고 / 옵션</h2>
                         </div>
 
                         <div class="form-row">
+
                             <div class="col-md-12">
                                 <label class="text-dark font-weight-medium"></label>
                                 <div class="form-group row">
@@ -197,23 +175,25 @@
                                         <div class="col-md-3 mb-3 form-group">
 
                                             <input type="text" class="form-control option_name" id="option_name"
-                                                   name="option_name"
+                                                   name="optionList[0][option_name]"
                                                    placeholder="옵션명">
                                         </div>
 
                                         <div class="col-md-9 mb-3 form-group">
                                             <input type="text" class="form-control detail_name" id="detail_name"
-                                                   name="detail_name"
+                                                   name="optionList[0][optionDetailList]"
                                                    placeholder="세부옵션명">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 mb-3 form-group">
-                                    <button class="btn btn-sm btn-primary" id="optionAddBtn" style="margin-top: 10px;">
+                                    <button class="btn btn-sm btn-primary" id="optionAddBtn"
+                                            style="margin-top: 10px;">
                                         옵션추가
                                     </button>
-                                    <button class="btn btn-sm btn-danger" id="optionDelBtn" style="margin-top: 10px;">
+                                    <button class="btn btn-sm btn-danger" id="optionDelBtn"
+                                            style="margin-top: 10px;">
                                         옵션삭제
                                     </button>
                                 </div>
@@ -430,6 +410,8 @@
                 var d = new Date();
                 var year = d.getFullYear();
                 document.getElementById("copy-year").innerHTML = year;
+
+
     </script>
 </footer>
 
@@ -440,8 +422,12 @@
 {% if result.result == 'fail' %}
 <script>
 	alert('{{result.message}}');
+
+
 </script>
 {% endif %}
+
+<script src="/assets/vendor/jquery/jquery.serializeObject.min.js"></script>
 
 <script>
 $(document).ready(function(){
@@ -497,8 +483,11 @@ $(document).ready(function(){
     $("#optionAddBtn").click(function(e){
         e.preventDefault();
         var clone = optionform3.clone();
-
         var tmp = optionid + optionnum;
+
+        clone.find("#option_name").attr("name","optionList[" + optionnum + "][option_name]");
+        clone.find("#detail_name").attr("name","optionList[" + optionnum + "][[optionDetailList]]");
+
         optionnum++;
 
         clone.attr('id', tmp);
@@ -521,29 +510,34 @@ $(document).ready(function(){
     $("#optionCombineBtn").click(function(e){
         e.preventDefault();
 
-        var tmpReturn = 0;
+        var tmpReturn1 = 0;
+        var tmpReturn2 = 0;
 
         $(".option_name").each(function(index, item){
             if (item.value==''){
-                alert("옵션명을 입력해주세요");
-                tmpReturn = 1;
+                tmpReturn1 = 1;
             }
         });
 
         $(".detail_name").each(function(index, item){
             if (item.value==''){
-                alert("세부옵션명을 입력해주세요");
-                tmpReturn = 1;
+                tmpReturn2 = 1;
             }
         });
 
-        if(tmpReturn == 1){
+        if(tmpReturn1 == 1){
+            alert("옵션명을 입력해주세요");
+            return;
+        }
+
+        if(tmpReturn2 == 1){
+            alert("세부옵션명을 입력해주세요");
             return;
         }
 
         optionCombiList.html("");
-        $(".detail_name").attr("disabled","disabled");
-        $(".option_name").attr("disabled","disabled");
+        $(".detail_name").attr("readonly","true");
+        $(".option_name").attr("readonly","true");
         $("#optionAddBtn").attr("disabled","disabled");
         $("#optionDelBtn").attr("disabled","disabled");
 
@@ -553,14 +547,11 @@ $(document).ready(function(){
         var combine_atom_list = [];
 
         detail_name.each(function(index, item){
-            console.log(index);
             combine_atom_list.push(item.value.split(',').map(item => item.trim()));
         });
         combine_list = combination(combine_atom_list);
-        console.log(combine_list);
 
         combine_list.forEach(function(element){
-            console.log(element);
             optioncode.html(element);
             var clone = optionlistform.clone();
 
@@ -574,6 +565,7 @@ $(document).ready(function(){
                 if($(this).val()=='1'){
                     clone.find("#stock_num").removeAttr("disabled");
                 } else {
+                    clone.find("#stock_num").val("");
                     clone.find("#stock_num").attr("disabled","disabled");
                 }
             });
@@ -604,8 +596,8 @@ $(document).ready(function(){
         e.preventDefault();
 
         optionCombiList.html("");
-        $(".detail_name").removeAttr("disabled");
-        $(".option_name").removeAttr("disabled");
+        $(".detail_name").removeAttr("readonly");
+        $(".option_name").removeAttr("readonly");
         $("#optionAddBtn").removeAttr("disabled");
         $("#optionDelBtn").removeAttr("disabled");
     });
@@ -613,8 +605,14 @@ $(document).ready(function(){
 
     $("#productaddBtn").click(function(e){
         e.preventDefault();
+
+        var test = JSON.stringify(productadd.serializeObject());
+
+        $("#test").val(test);
+
         productadd.attr("action","/manager/product").attr("method","post").submit();
-    });
+
+    });//end productaddBtn
 
     //이미지
     var inputnum = 1;
@@ -696,6 +694,8 @@ $(document).ready(function(){
         categoryadd.attr("action","/manager/categoryadd").attr("method","post").submit();
     });
 });
+
+
 
 
 
