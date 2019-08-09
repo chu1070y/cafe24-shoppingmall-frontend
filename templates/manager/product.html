@@ -28,6 +28,7 @@
 
 
 
+
 </style>
 
 {% endblock %}
@@ -129,7 +130,7 @@
 
                         <div class="card-header card-header-border-bottom"></div>
                         <div class="card-header card-header-border-bottom">
-                            <h2>재고/옵션</h2>
+                            <h2>재고 / 옵션</h2>
                         </div>
 
                         <div class="form-row">
@@ -217,9 +218,14 @@
                                     </button>
                                 </div>
                                 <div class="col-md-12 mb-3 form-group">
-                                    <button class="btn btn-sm btn-success" id="optionCombineBtn"
+                                    <button class="btn btn-sm btn-outline-success" id="optionCombineBtn"
                                             style="margin-top: 10px;">
                                         옵션품목 만들긔
+                                    </button>
+
+                                    <button class="btn btn-sm btn-outline-info" id="optionResetBtn"
+                                            style="margin-top: 10px;">
+                                        초기화
                                     </button>
                                 </div>
 
@@ -389,16 +395,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr id="optionlistform">
+            <tr id="optionlistform" name="optionInfo">
                 <td scope="row" id="optioncode">블랙/M/슬림핏</td>
                 <td><input type="text" class="form-control" name="add_price"></td>
-                <td><select name="stock_use" style="margin-top: 10px;">
+                <td><select id="stock_use" name="stock_use" style="margin-top: 10px;">
                     <option value="0">NO</option>
                     <option value="1">YES</option>
                 </select></td>
-                <td><input type="text" class="form-control" name="stock_num"></td>
+                <td><input type="text" class="form-control" id="stock_num" name="stock_num" disabled></td>
                 <td>
-                    <button class="btn btn-sm btn-danger" type="submit">X</button>
+                    <button class="btn btn-sm btn-danger" id="optionCombiDelBtn" type="submit">X</button>
                 </td>
             </tr>
 
@@ -424,10 +430,6 @@
                 var d = new Date();
                 var year = d.getFullYear();
                 document.getElementById("copy-year").innerHTML = year;
-
-
-
-
     </script>
 </footer>
 
@@ -438,10 +440,6 @@
 {% if result.result == 'fail' %}
 <script>
 	alert('{{result.message}}');
-
-
-
-
 </script>
 {% endif %}
 
@@ -454,6 +452,10 @@ $(document).ready(function(){
 
     var optionUse = $("input:radio[name=option_use]");
     var stockUse = $("input:radio[name=stock_use]");
+
+    var optionform2 = $("#optionform2");
+    var optionform3 = $("#optionform3");
+    var optionform2Clone = $("#optionform2").clone();
 
     //옵션 및 재고
     optionUse.change(function(e){
@@ -484,15 +486,13 @@ $(document).ready(function(){
             $("#detail_name").val("");
             $("#optionlist").attr("style","display:none;");
             $("#stockform2").html($("#stockform1").html());
+            $("#optionform2").html(optionform2Clone)
         }
 
     });
 
     var optionnum = 1;
     var optionid = 'option';
-
-    var optionform2 = $("#optionform2");
-    var optionform3 = $("#optionform3");
 
     $("#optionAddBtn").click(function(e){
         e.preventDefault();
@@ -520,6 +520,33 @@ $(document).ready(function(){
 
     $("#optionCombineBtn").click(function(e){
         e.preventDefault();
+
+        var tmpReturn = 0;
+
+        $(".option_name").each(function(index, item){
+            if (item.value==''){
+                alert("옵션명을 입력해주세요");
+                tmpReturn = 1;
+            }
+        });
+
+        $(".detail_name").each(function(index, item){
+            if (item.value==''){
+                alert("세부옵션명을 입력해주세요");
+                tmpReturn = 1;
+            }
+        });
+
+        if(tmpReturn == 1){
+            return;
+        }
+
+        optionCombiList.html("");
+        $(".detail_name").attr("disabled","disabled");
+        $(".option_name").attr("disabled","disabled");
+        $("#optionAddBtn").attr("disabled","disabled");
+        $("#optionDelBtn").attr("disabled","disabled");
+
         var detail_name = $(".detail_name")
 
         var combine_list = [];
@@ -527,7 +554,7 @@ $(document).ready(function(){
 
         detail_name.each(function(index, item){
             console.log(index);
-            combine_atom_list.push(item.value.split(','));
+            combine_atom_list.push(item.value.split(',').map(item => item.trim()));
         });
         combine_list = combination(combine_atom_list);
         console.log(combine_list);
@@ -536,7 +563,21 @@ $(document).ready(function(){
             console.log(element);
             optioncode.html(element);
             var clone = optionlistform.clone();
-            console.log(clone);
+
+            clone.find('#optionCombiDelBtn').click(function(e){
+                e.preventDefault();
+                $(this).parents('tr').remove();
+            });
+
+            clone.find("#stock_use").change(function(e){
+                e.preventDefault();
+                if($(this).val()=='1'){
+                    clone.find("#stock_num").removeAttr("disabled");
+                } else {
+                    clone.find("#stock_num").attr("disabled","disabled");
+                }
+            });
+
             optionCombiList.append(clone);
         });
 
@@ -558,6 +599,17 @@ $(document).ready(function(){
         return result;
         }
     }
+
+    $("#optionResetBtn").click(function(e){
+        e.preventDefault();
+
+        optionCombiList.html("");
+        $(".detail_name").removeAttr("disabled");
+        $(".option_name").removeAttr("disabled");
+        $("#optionAddBtn").removeAttr("disabled");
+        $("#optionDelBtn").removeAttr("disabled");
+    });
+
 
     $("#productaddBtn").click(function(e){
         e.preventDefault();
@@ -644,6 +696,7 @@ $(document).ready(function(){
         categoryadd.attr("action","/manager/categoryadd").attr("method","post").submit();
     });
 });
+
 
 
 
