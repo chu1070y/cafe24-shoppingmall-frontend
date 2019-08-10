@@ -29,7 +29,6 @@ class RestAPI:
 def product_result(request):
     data = request.POST
     img = request.FILES
-    print(data)
 
     change_data = {'name': data.get('name'),
                    'code': product_code(),
