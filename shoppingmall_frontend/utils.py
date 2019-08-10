@@ -1,4 +1,5 @@
 import datetime
+import json
 import uuid
 
 import requests
@@ -48,11 +49,25 @@ def product_result(request):
                            'stock_use': ''
                            }
 
-    # 재고 - 미완성 재고개수등 다른 것도 넣어야함... 옵션과 같이 해야함
-    for detail in data.get('stock_use'):
-        product_detail_form['stock_use'] = detail
+    # 재고 및 옵션
+    # 옵션을 사용하지 않고 재고만 사용할 경우
+    test = json.loads(data.get('test'))
 
-    change_data['productDetailList'].append(product_detail_form)
+    if test['stock_use'] == '1':
+        product_detail_form['stock_use'] = test['stock_use']
+        product_detail_form['stock_num'] = test['stock_num']
+        change_data['productDetailList'].append(product_detail_form)
+
+    if test['option_use'] == '1':
+
+        for option_detail in test['optionList']:
+            option_detail['optionDetailList'] = [
+                {'detail_name': value} for value in option_detail['optionDetailList'].split(',')
+            ]
+
+        change_data['optionList'] = test['optionList']
+
+        change_data['productDetailList'] = [item for item in test['productDetailList'] if item is not None]
 
     # 이미지
     if img.get('mainImg') is not None:

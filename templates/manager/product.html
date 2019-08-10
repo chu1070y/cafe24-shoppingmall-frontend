@@ -175,7 +175,7 @@
                                         <div class="col-md-3 mb-3 form-group">
 
                                             <input type="text" class="form-control option_name" id="option_name"
-                                                   name="optionList[0][option_name]"
+                                                   name="optionList[0][name]"
                                                    placeholder="옵션명">
                                         </div>
 
@@ -376,13 +376,13 @@
             </thead>
             <tbody>
             <tr id="optionlistform" name="optionInfo">
-                <td scope="row" id="optioncode">블랙/M/슬림핏</td>
-                <td><input type="text" class="form-control" name="add_price"></td>
-                <td><select id="stock_use" name="stock_use" style="margin-top: 10px;">
+                <td scope="row"><input type="text" class="form-control" id="optioncode" readonly /></td>
+                <td><input type="text" class="form-control" id="add_price"></td>
+                <td><select id="stock_use2" style="margin-top: 10px;">
                     <option value="0">NO</option>
                     <option value="1">YES</option>
                 </select></td>
-                <td><input type="text" class="form-control" id="stock_num" name="stock_num" disabled></td>
+                <td><input type="text" class="form-control" id="stock_num2" disabled></td>
                 <td>
                     <button class="btn btn-sm btn-danger" id="optionCombiDelBtn" type="submit">X</button>
                 </td>
@@ -485,8 +485,8 @@ $(document).ready(function(){
         var clone = optionform3.clone();
         var tmp = optionid + optionnum;
 
-        clone.find("#option_name").attr("name","optionList[" + optionnum + "][option_name]");
-        clone.find("#detail_name").attr("name","optionList[" + optionnum + "][[optionDetailList]]");
+        clone.find("#option_name").attr("name","optionList[" + optionnum + "][name]");
+        clone.find("#detail_name").attr("name","optionList[" + optionnum + "][optionDetailList]");
 
         optionnum++;
 
@@ -505,6 +505,9 @@ $(document).ready(function(){
 
     var optionlistform = $("#optionlistform");
     var optioncode = $("#optioncode");
+    var add_price = $("#add_price");
+    var stock_use2 = $("#stock_use2");
+    var stock_num2 = $("#stock_num2");
     var optionCombiList = $("#optionCombiList");
 
     $("#optionCombineBtn").click(function(e){
@@ -551,8 +554,13 @@ $(document).ready(function(){
         });
         combine_list = combination(combine_atom_list);
 
-        combine_list.forEach(function(element){
-            optioncode.html(element);
+        combine_list.forEach(function(element, index){
+            optioncode.val(element);
+            optioncode.attr('name','productDetailList[' + index + '][option_code]');
+            add_price.attr('name','productDetailList[' + index + '][add_price]');
+            stock_use2.attr('name','productDetailList[' + index + '][stock_use2]');
+            stock_num2.attr('name','productDetailList[' + index + '][stock_num2]');
+
             var clone = optionlistform.clone();
 
             clone.find('#optionCombiDelBtn').click(function(e){
@@ -560,13 +568,13 @@ $(document).ready(function(){
                 $(this).parents('tr').remove();
             });
 
-            clone.find("#stock_use").change(function(e){
+            clone.find("#stock_use2").change(function(e){
                 e.preventDefault();
                 if($(this).val()=='1'){
-                    clone.find("#stock_num").removeAttr("disabled");
+                    clone.find("#stock_num2").removeAttr("disabled");
                 } else {
-                    clone.find("#stock_num").val("");
-                    clone.find("#stock_num").attr("disabled","disabled");
+                    clone.find("#stock_num2").val("");
+                    clone.find("#stock_num2").attr("disabled","disabled");
                 }
             });
 
