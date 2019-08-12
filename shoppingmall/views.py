@@ -32,8 +32,7 @@ def error404(request):
 
 def cart(request):
     if request.method == "POST":
-        print(request.session)
-        print(request.POST)
+
         # 로그인 하지 않은 경우
         if 'authuser' not in request.session:
             return HttpResponse(json.dumps({'result': 'fail'}), content_type='application/json')
