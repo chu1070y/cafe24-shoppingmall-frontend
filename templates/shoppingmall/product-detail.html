@@ -82,6 +82,8 @@
                 <div class="flex-r-m flex-w p-t-10">
                     <div class="flex-m flex-w" style="width: 100%;">
                         <form id="order-form">
+                            {% csrf_token %}
+                            <input type="hidden" id="product_detail_no" name="product_detail_no"/>
                             <div class="flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10">
                                 <button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2 change-num">
                                     <i class="fs-12 fa fa-minus" aria-hidden="true"></i>
@@ -109,10 +111,12 @@
 
 
                         <div class="btn-addcart-product-detail size6 trans-0-4 m-t-10 m-b-10">
-                            <!-- Button -->
-                            <button class="flex-c-m sizefull btn btn-success btn-outline-success bo-rad-23 trans-0-4">
-                                장바구니
-                            </button>
+                            <div id="addCart">
+                                <!-- Button -->
+                                <button class="flex-c-m sizefull btn btn-success btn-outline-success bo-rad-23 trans-0-4">
+                                    장바구니
+                                </button>
+                            </div>
                             <br/>
                             <button class="flex-c-m sizefull btn btn-primary btn-outline-primary bo-rad-23 trans-0-4">
                                 바로구매
@@ -239,6 +243,8 @@ $(document).ready(function(e){
 
             $("#addPrice").html("옵션 추가가격: " + $("#addPrice").data('price') * $("#num-product").val());
             $("#totalPrice").html("총 가격: " + $("#totalPrice").data('price') * $("#num-product").val());
+
+            $("#product_detail_no").val(select.product_detail_no);
         }
 
     });// end .option-select
@@ -250,7 +256,60 @@ $(document).ready(function(e){
         $("#totalPrice").html("총 가격: " + $("#totalPrice").data('price') * $("#num-product").val());
     });
 
-});
+$('#addCart').click(function(e){
+    e.preventDefault();
+    var nameProduct = json.name;
+
+    // 옵션 있는지 확인 후 옵션 선택여부 확인
+    if (optionList.length != 0){
+        var check = 0;
+        if ($("#addinfo").attr("style") == "display: none;"){
+            check = 1;
+        }
+
+        $(".option-select").each(function(){
+            if ($(this).val() == '---'){
+                check = 1;
+            }
+        });
+
+        if(check == 1){
+            alert("옵션을 선택해주세요.");
+            return;
+        }
+    }
+
+    $.ajaxSetup({
+     beforeSend: function(xhr, settings) {
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     }
+    });
+
+    // 카트에 넣기
+    $.ajax({
+        url: '/shoppingmall/cart',
+        type : 'POST',
+        data : {
+            'quantity': $("#num-product").val(),
+            'product_detail_no': $("#product_detail_no").val()
+        },
+        success : function(result){
+            if(result.result=='success'){
+                swal(nameProduct, "is added to cart !", "success");
+            } else if(result.result=='fail') {
+                alert('로그인 해주세요(비회원 장바구니 구현중...)');
+            }
+        },
+        fail: function(e){
+            console.log("fail");
+        }
+        });// end ajax
+});//end addcart
+
+});//end document.ready
 
 
 </script>
