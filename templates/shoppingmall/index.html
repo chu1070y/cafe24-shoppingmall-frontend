@@ -157,6 +157,7 @@
                                         <div class="block2-btn-addcart w-size1 trans-0-4" data-count="{{product.productDetailList|length}}">
                                             <!-- Button -->
                                             <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                                                <input type="hidden" class="product_detail_no" value="{{product.productDetailList.0.product_detail_no}}">
                                                 Add to Cart
                                             </button>
                                         </div>
@@ -173,7 +174,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" id="product_detail_no" value="{{product.productDetailList.0.product_detail_no}}">
+
                         {% endfor %}
 
                     </div>
@@ -287,7 +288,7 @@ $(document).ready(function(e){
 		    	type : 'POST',
 		    	data : {
 			       'quantity': 1,
-			        'product_detail_no': $("#product_detail_no").val()
+			        'product_detail_no': $(this).find(".product_detail_no").val()
 			    },
                 success : function(result){
                     if(result.result=='success'){
