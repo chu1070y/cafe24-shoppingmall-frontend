@@ -20,7 +20,9 @@ def detail(request, no=1):
     if product_detail['result'] == 'fail':
         return redirect('/shoppingmall/error404')
 
-    return render(request, 'shoppingmall/product-detail.html', {'product_detail': product_detail['data']})
+    return render(request, 'shoppingmall/product-detail.html',
+                  {'product_detail': product_detail['data'],
+                   'json': json.dumps(product_detail['data'])})
 
 
 def error404(request):
