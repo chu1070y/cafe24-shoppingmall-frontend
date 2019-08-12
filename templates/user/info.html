@@ -5,20 +5,20 @@
 	<section class="blog bgwhite p-t-94 p-b-65">
 		<div class="container">
 			<div class="sec-title p-b-52">
-				<h3 class="m-text5 t-center">
-					로그아웃
+				<h3 class="m-text5 t-center" style="font-family: soya; font-size: 100px;">
+					Logout
 				</h3>
 			</div>
-
+			<img src="/assets/images/icons/logout.gif" style="display: block; margin: 0px auto; ">
+			<br/>
 			<div class="row">
 
 				<form class="col-sm-10 col-md-4 p-b-30 m-l-r-auto" id="updateform">
 					{% csrf_token %}
 
-
 					<div class="of-hidden size15 m-b-20" >
 						<!-- Button -->
-						<button id="logoutbtn" class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" onclick="location.href='/user/logout'">
+						<button id="logoutbtn" class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" onclick="location.href='/user/logout'" style="font-family: soya;">
 							로그아웃
 						</button>
 					</div>
