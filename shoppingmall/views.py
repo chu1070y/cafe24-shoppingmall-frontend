@@ -34,13 +34,13 @@ def error404(request):
 
 
 def cart(request):
-    if request.method == "POST":
+    request.session['nomember'] = nomember_cart(request)
 
+    if request.method == "POST":
         # 로그인 하지 않은 경우
         if 'authuser' not in request.session:
-            nomember = nomember_cart(request)
             result = rest_api.api_post("/api/cart/add", json.dumps({
-                'nomember_no': nomember['no'],
+                'nomember_no': request.session['nomember']['no'],
                 'product_detail_no': request.POST['product_detail_no'],
                 'quantity': request.POST['quantity'],
             }))
@@ -56,9 +56,8 @@ def cart(request):
 
     # 로그인 하지 않은 경우
     if 'authuser' not in request.session:
-        nomember = nomember_cart(request)
         cart_list = json.loads(rest_api.api_get("/api/cart/list", {
-            "nomember_no": nomember['no']
+            "nomember_no": request.session['nomember']['no']
         }))
     else:
         # 로그인 한 경우
@@ -76,20 +75,24 @@ def cart_del(request):
 
 def order(request):
     result = ""
-
-    if 'authuser' not in request.session:
-        return render(request, 'shoppingmall/404.html')
+    request.session['nomember'] = nomember_cart(request)
 
     if request.method == "POST":
         data = order_data(request)
         result = json.loads(rest_api.api_post("/api/order/add", json.dumps(data)))
 
         if result['result'] == 'success':
-            return redirect('/shoppingmall/orderSuccess')
+            print(result)
+            return render(request, 'shoppingmall/order_success.html', {'result': result['data']})
 
-    cart_list = json.loads(rest_api.api_get("/api/cart/list", {
-        "member_no": request.session['authuser']['no']
-    }))
+    if 'authuser' not in request.session:
+        cart_list = json.loads(rest_api.api_get("/api/cart/list", {
+            "nomember_no": request.session['nomember']['no']
+        }))
+    else:
+        cart_list = json.loads(rest_api.api_get("/api/cart/list", {
+            "member_no": request.session['authuser']['no']
+        }))
 
     if len(cart_list['data']) == 0:
         return redirect('/shoppingmall/cart')
