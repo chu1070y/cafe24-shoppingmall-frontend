@@ -1,0 +1,259 @@
+{% extends '../base.html' %}
+{% load mathfilters %}
+{% block content %}
+<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m"
+         style="background-image: url(/assets/images/icons/order.jpg);">
+</section>
+
+<!-- Blog -->
+<section class="blog bgwhite p-t-94 p-b-65">
+    <div class="container">
+        <div class="sec-title p-b-52">
+            <h3 class="t-center">
+                주문허긔
+            </h3>
+        </div>
+
+        <div class="row">
+
+            <form class="col-sm-10 m-l-r-auto" id="joinform" style="padding: 0;">
+                {% csrf_token %}
+
+                <!-- Cart item -->
+                <div class="container-table-cart pos-relative">
+                    <div class="wrap-table-shopping-cart bgwhite">
+                        <table class="table-shopping-cart">
+                            <tr class="table-head">
+                                <th class="column-3" style="padding-right: 0;"></th>
+                                <th class="column-3" style="width: 150px;">Product</th>
+                                <th class="column-3">Option</th>
+                                <th class="column-3">Price</th>
+                                <th class="column-3">AddPrice</th>
+                                <th class="column-2 p-l-70" style="width: 200px; padding: 0px; padding-left: 30px;">
+                                    Quantity
+                                </th>
+                                <th class="column-3">Total-price</th>
+                            </tr>
+
+                            {% for cart in cart_list.data %}
+
+                            <tr class="table-row cart-data" id="cart{{cart.product_detail_no}}">
+                                <td class="column-3" style="padding: 0;">
+                                    <div>
+                                        <img src="/media/{{cart.productDetailInfo.productVO.productImgList.0.filename}}"
+                                             alt="IMG-PRODUCT" style="position: relative; width: 90px; height: 90px">
+                                    </div>
+                                </td>
+                                <td class="column-3" style="width: 150px; padding: 0;">{{cart.productDetailInfo.productVO.name}}
+                                </td>
+                                <td class="column-3" style="padding: 0;">{{cart.productDetailInfo.option_code}}</td>
+                                <td class="column-3 price" style="padding: 0;">{{cart.productDetailInfo.productVO.price}}</td>
+                                <td class="column-3 addprice" style="padding: 0;">{{cart.productDetailInfo.add_price}}</td>
+                                <td class="column-3" style="padding: 0;">
+                                    <input class="size8 m-text18 t-center num-product quantity-val" type="number"
+                                           name="num-product1"
+                                           value="{{cart.quantity}}">
+
+                                </td>
+                                <td class="column-3 total" style="padding: 0;">
+                                    {{cart.productDetailInfo.productVO.price|add:cart.productDetailInfo.add_price|mul:cart.quantity}}
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
+                <br/>
+                <hr/>
+                <div class="size15 ">
+                    <input class="sizefull t-center" type="text" value="주문정보" readonly/>
+                </div>
+                주문인 이름<br/>
+                <div class="bo4 size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="order_name" name="order_name"
+                           placeholder="order_name"/>
+                </div>
+
+                <div class="of-hidden size2" style="height:25px">
+                    주문인 주소
+                </div>
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="order_addr"
+                           placeholder="order_addr"/>
+                </div>
+                주문인 일반전화
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="order_tel_home"
+                           placeholder="order_tel_home"/>
+                </div>
+                주문인 휴대전화
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="order_tel_phone"
+                           placeholder="order_tel_phone"/>
+                </div>
+                주문인 이메일
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="order_email"
+                           placeholder="order_email"/>
+                </div>
+
+                <br/>
+                <hr/>
+                <div class="size15">
+                    <input class="sizefull t-center" type="text" value="배송정보" readonly/>
+                </div>
+
+                수령인
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="receiver_name"
+                           placeholder="receiver_name"/>
+                </div>
+
+                수령인 일반전화
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="receiver_tel_home"
+                           placeholder="receiver_tel_home"/>
+                </div>
+
+                수령인 휴대전화
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="receiver_tel_phone"
+                           placeholder="receiver_tel_phone"/>
+                </div>
+
+                배송지주소
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="deliver_addr"
+                           placeholder="deliver_addr"/>
+                </div>
+
+                배송메시지
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="deliver_msg"
+                           placeholder="deliver_msg"/>
+                </div>
+
+                <br/>
+                <hr/>
+                <div class="size15">
+                    <input class="sizefull t-center" type="text" value="결제정보" readonly/>
+                </div>
+
+                결제금액
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="payment" placeholder="payment"
+                           value="0"
+                           readonly/>
+                </div>
+
+                결제수단
+                <div class="of-hidden size15 m-b-20">
+                    <label class="btn btn-primary">
+                        <input type="radio" name="gender" value="kakaopay" checked="checked"> 카카오페이
+                    </label>
+                </div>
+
+                <div class="of-hidden size15 m-b-20">
+                    <!-- Button -->
+                    <button id="joinbtn" class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+                        결제허긔...
+                    </button>
+                </div>
+        </div>
+        </form>
+
+    </div>
+    </div>
+</section>
+
+<input type="hidden" id="result" value="{{result}}">
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+	var joinform = $("#joinform");
+	var result = $("#result").val();
+
+	var check = 0;
+
+	console.log(result);
+
+	if(result != ""){
+		result = JSON.parse(result);
+	}
+
+	if(result.result=='fail'){
+
+		var data = result.message.split('/');
+		var keys = {};
+
+		data.forEach(function (item, index, array) {
+			if(index == (data.length-1)){return;}
+			keys[item] = 1;
+		});
+
+		alert(Object.keys(keys));
+	}
+
+	if(result.data=='중복 아이디'){
+		alert(result.data);
+	}
+
+	$("#id").change(function(e){
+		console.log("change");
+		check = 0;
+	});
+
+	$("#checkId").click(function(e){
+		e.preventDefault();
+
+		var id = $("#id").val();
+
+		 $.ajax({
+			url: '/user/checkId',
+			type : 'GET',
+			data : {'id': id },
+			success : function(result){
+
+				if (result.result == "fail"){
+					alert("아이디는 4~18글자로 영어나 숫자만 입력해주세요");
+				}
+				else if(result.data=="중복"){
+					alert("중복 아이디");
+				} else {
+					alert("사용 가능 아이디");
+					check = 1;
+				}
+			},
+			fail: function(e){
+			    console.log("fail");
+			}
+
+		  });// end ajax
+
+	});// end checkId
+
+	$("#joinbtn").click(function(e){
+		e.preventDefault();
+
+		if(check==0){
+			alert("아이디 중복체크 후 회원가입 해주세요")
+			return;
+		}
+
+		joinform.attr("action","/user/join").attr("method","post").submit();
+
+	});// end joinbtn
+
+});
+
+
+
+
+
+
+</script>
+{% endblock %}

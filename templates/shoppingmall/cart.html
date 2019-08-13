@@ -29,6 +29,7 @@
 
                     {% if result != 'login' %}
                     {% for cart in cart_list.data %}
+
                     <tr class="table-row cart-data" id="cart{{cart.product_detail_no}}">
                         <td class="column-1" style="padding-right: 0; ">
                             <div>
@@ -38,8 +39,8 @@
                         </td>
                         <td class="column-3" style="width: 150px;">{{cart.productDetailInfo.productVO.name}}</td>
                         <td class="column-3">{{cart.productDetailInfo.option_code}}</td>
-                        <td class="column-3 price" data-price="{{cart.productDetailInfo.productVO.price}}"></td>
-                        <td class="column-3 addprice" data-price="{{cart.productDetailInfo.add_price}}"></td>
+                        <td class="column-3 price">{{cart.productDetailInfo.productVO.price}}</td>
+                        <td class="column-3 addprice">{{cart.productDetailInfo.add_price}}</td>
                         <td class="column-2" style="width: 200px; padding: 0px;">
                             <div class="flex-w bo5 of-hidden w-size17 quantity">
                                 <button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
@@ -55,7 +56,9 @@
                                 </button>
                             </div>
                         </td>
-                        <td class="column-3 total"></td>
+                        <td class="column-3 total" data-price="{{cart.productDetailInfo.productVO.price|add:cart.productDetailInfo.add_price|mul:cart.quantity}}">
+                            {{cart.productDetailInfo.productVO.price|add:cart.productDetailInfo.add_price|mul:cart.quantity}}
+                        </td>
                         <td class="column-3">X</td>
                     </tr>
                     {% endfor %}
@@ -66,6 +69,7 @@
                 {% endif %}
             </div>
         </div>
+
 
         <!-- Total -->
         <div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm">
@@ -110,7 +114,7 @@
 
             <div class="size15 trans-0-4">
                 <!-- Button -->
-                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" onClick="location.href='/shoppingmall/order'">
                     주문/결제 허긔
                 </button>
             </div>
@@ -148,20 +152,6 @@ Number.prototype.format = function(){
 
     return n;
 };
-
-    $(".cart-data").each(function(){
-        $(this).find(".price").html(($(this).find(".price").data("price")*$(this).find(".quantity-val").val()).format()+"원");
-        $(this).find(".addprice").html(($(this).find(".addprice").data("price")*$(this).find(".quantity-val").val()).format()+"원");
-        $(this).find(".total").html(
-            ($(this).find(".price").data("price")*$(this).find(".quantity-val").val() +
-            $(this).find(".addprice").data("price")*$(this).find(".quantity-val").val()).format() + "원"
-        );
-
-        $(this).find(".total").data("price",
-            $(this).find(".price").data("price")*$(this).find(".quantity-val").val() +
-            $(this).find(".addprice").data("price")*$(this).find(".quantity-val").val()
-        );
-    });
 
     var subtotal = 0;
 

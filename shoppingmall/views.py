@@ -55,3 +55,15 @@ def cart(request):
         "member_no": request.session['authuser']['no']
     }))
     return render(request, 'shoppingmall/cart.html', {'cart_list': cart_list})
+
+
+def order(request):
+    if 'authuser' not in request.session:
+
+        return render(request, 'shoppingmall/404.html')
+
+    cart_list = json.loads(rest_api.api_get("/api/cart/list", {
+        "member_no": request.session['authuser']['no']
+    }))
+
+    return render(request, 'shoppingmall/order.html', {'cart_list': cart_list})
