@@ -57,6 +57,11 @@ def cart(request):
     return render(request, 'shoppingmall/cart.html', {'cart_list': cart_list})
 
 
+def cart_del(request):
+    rest_api.api_post("/api/cart/delete", request.POST['no'])
+    return redirect('/shoppingmall/cart')
+
+
 def order(request):
     if 'authuser' not in request.session:
 
