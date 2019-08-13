@@ -79,6 +79,9 @@ def order(request):
         "member_no": request.session['authuser']['no']
     }))
 
+    if len(cart_list['data']) == 0:
+        return redirect('/shoppingmall/cart')
+
     return render(request, 'shoppingmall/order.html', {'cart_list': cart_list, 'result': result})
 
 

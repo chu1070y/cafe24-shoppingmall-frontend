@@ -62,7 +62,7 @@
                         <td class="column-3">
                             <form action="/shoppingmall/cart_del" method="post">
                                 {% csrf_token %}
-                                <input type="hidden" name="no" value={{cart.no}} />
+                                <input type="hidden" name="no" value={{cart.no}}/>
                                 <button type="submit" class="flex-c-m btn btn-danger btn-outline-danger">
                                     X
                                 </button>
@@ -77,6 +77,12 @@
                 {% endif %}
             </div>
         </div>
+
+        {% if cart_list.data|length == 0 %}
+        <div style="text-align:center;">
+            장바구니에 상품을 넣어주세요!
+        </div>
+        {% endif %}
 
 
         <!-- Total -->
@@ -172,6 +178,7 @@ $(document).ready(function(e){
     $("#real-total").html((subtotal).format() + "원");
 
 });
+
 
 </script>
 
