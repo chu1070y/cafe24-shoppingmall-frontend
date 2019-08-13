@@ -4,12 +4,15 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from shoppingmall_frontend.utils import RestAPI, order_data
+from shoppingmall_frontend.utils import RestAPI, order_data, nomember_cart
 
 rest_api = RestAPI()
 
 
 def index(request):
+    if 'nomember' not in request.session:
+        request.session['nomember'] = ""
+
     product_list = json.loads(rest_api.api_get("/api/product/mainlist"))
     return render(request, 'shoppingmall/index.html', {'product_list': product_list})
 
@@ -35,25 +38,34 @@ def cart(request):
 
         # 로그인 하지 않은 경우
         if 'authuser' not in request.session:
-            return HttpResponse(json.dumps({'result': 'fail'}), content_type='application/json')
-
-        # 로그인 한 경우
-        result = rest_api.api_post("/api/cart/add",  json.dumps({
-            'member_no': request.session['authuser']['no'],
-            'product_detail_no': request.POST['product_detail_no'],
-            'quantity': request.POST['quantity'],
-        }))
+            nomember = nomember_cart(request)
+            result = rest_api.api_post("/api/cart/add", json.dumps({
+                'nomember_no': nomember['no'],
+                'product_detail_no': request.POST['product_detail_no'],
+                'quantity': request.POST['quantity'],
+            }))
+        else:
+            # 로그인 한 경우
+            result = rest_api.api_post("/api/cart/add", json.dumps({
+                'member_no': request.session['authuser']['no'],
+                'product_detail_no': request.POST['product_detail_no'],
+                'quantity': request.POST['quantity'],
+            }))
 
         return HttpResponse(result, content_type='application/json')
 
     # 로그인 하지 않은 경우
     if 'authuser' not in request.session:
-        return render(request, 'shoppingmall/cart.html', {'result': 'login'})
+        nomember = nomember_cart(request)
+        cart_list = json.loads(rest_api.api_get("/api/cart/list", {
+            "nomember_no": nomember['no']
+        }))
+    else:
+        # 로그인 한 경우
+        cart_list = json.loads(rest_api.api_get("/api/cart/list", {
+            "member_no": request.session['authuser']['no']
+        }))
 
-    # 로그인 한 경우
-    cart_list = json.loads(rest_api.api_get("/api/cart/list", {
-        "member_no": request.session['authuser']['no']
-    }))
     return render(request, 'shoppingmall/cart.html', {'cart_list': cart_list})
 
 

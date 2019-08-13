@@ -15,12 +15,12 @@ class RestAPI:
             'content-type': "application/json"
         }
 
-    def api_get(self, url, param=""):
+    def api_get(self, url, param={}):
         destination = self.url + url
         response = requests.get(destination, params=param)
         return response.text
 
-    def api_post(self, url, data=""):
+    def api_post(self, url, data={}):
         destination = self.url + url
         response = requests.post(destination, data=data, headers=self.headers)
         return response.text
@@ -142,3 +142,13 @@ def order_code():
     code += str(datetime.datetime.today().microsecond)
 
     return code
+
+
+# 장바구니 비회원 로직
+def nomember_cart(request):
+    rest_api = RestAPI()
+    result = rest_api.api_get("/api/nomember", {
+        "session_id": request.session.session_key
+    })
+    return json.loads(result)['data']
+
