@@ -108,8 +108,31 @@ def file_upload(main_file, main_filename):
     fp.close()
 
 
+# 상품 코드 생성
 def product_code():
     code = "p0"
+    code += str(datetime.datetime.today().year)
+    code += str(datetime.datetime.today().month)
+    code += str(datetime.datetime.today().day)
+    code += str(datetime.datetime.today().hour)
+    code += str(datetime.datetime.today().minute)
+    code += str(datetime.datetime.today().second)
+    code += str(datetime.datetime.today().microsecond)
+
+    return code
+
+
+def order_data(data):
+    result = json.loads(data)
+    result['order_code'] = order_code()
+    result['status'] = '주문완료'
+
+    return result
+
+
+# 주문 코드 생성
+def order_code():
+    code = "Order"
     code += str(datetime.datetime.today().year)
     code += str(datetime.datetime.today().month)
     code += str(datetime.datetime.today().day)

@@ -10,13 +10,14 @@
     <div class="container">
         <div class="sec-title p-b-52">
             <h3 class="t-center">
-                주문허긔
+                주문을 원하는가?
             </h3>
         </div>
 
         <div class="row">
 
-            <form class="col-sm-10 m-l-r-auto" id="joinform" style="padding: 0;">
+            <form class="col-sm-10 m-l-r-auto" id="orderform" style="padding: 0;">
+                <input type="hidden" name="test" id="test"/>
                 {% csrf_token %}
 
                 <!-- Cart item -->
@@ -36,12 +37,15 @@
                             </tr>
 
                             {% for cart in cart_list.data %}
-
                             <tr class="table-row cart-data" id="cart{{cart.product_detail_no}}">
                                 <td class="column-3" style="padding: 0;">
                                     <div>
                                         <img src="/media/{{cart.productDetailInfo.productVO.productImgList.0.filename}}"
                                              alt="IMG-PRODUCT" style="position: relative; width: 90px; height: 90px">
+                                        <input type="hidden" name="orderDetail[{{forloop.counter0}}][product_detail_no]"
+                                               value="{{cart.product_detail_no}}"/>
+                                        <input type="hidden" name="orderDetail[{{forloop.counter0}}][cart_no]"
+                                               value="{{cart.no}}"/>
                                     </div>
                                 </td>
                                 <td class="column-3" style="width: 150px; padding: 0;">
@@ -55,11 +59,13 @@
                                 </td>
                                 <td class="column-3" style="padding: 0;">
                                     <input class="size8 m-text18 t-center num-product quantity-val" type="number"
-                                           name="num-product1"
+                                           name="orderDetail[{{forloop.counter0}}][quantity]"
                                            value="{{cart.quantity}}">
-
+                                    <input type="hidden" name="orderDetail[{{forloop.counter0}}][price]"
+                                           value="{{cart.productDetailInfo.productVO.price|add:cart.productDetailInfo.add_price}}" />
                                 </td>
-                                <td class="column-3 total" style="padding: 0;">
+                                <td class="column-3 total" style="padding: 0;"
+                                    data-total="{{cart.productDetailInfo.productVO.price|add:cart.productDetailInfo.add_price|mul:cart.quantity}}">
                                     {{cart.productDetailInfo.productVO.price|add:cart.productDetailInfo.add_price|mul:cart.quantity}}
                                 </td>
 
@@ -85,7 +91,7 @@
                 </div>
                 <div class="bo4 of-hidden size15 m-b-20">
                     <input class="sizefull s-text7 p-l-22 p-r-22 addr order_addr" type="text" id="order_addr1"
-                           placeholder="주소 검색"readonly/>
+                           placeholder="주소 검색" readonly/>
                 </div>
                 <div class="bo4 of-hidden size15 m-b-20">
                     <input class="sizefull s-text7 p-l-22 p-r-22 order_addr" type="text" id="order_addr2"
@@ -94,18 +100,25 @@
                 </div>
                 주문인 일반전화
                 <div class="bo4 of-hidden size15 m-b-20">
-                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="order_tel_home"
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="order_tel_home" name="order_tel_home"
                            placeholder="일반전화"/>
                 </div>
                 주문인 휴대전화
                 <div class="bo4 of-hidden size15 m-b-20">
-                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="order_tel_phone"
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="order_tel_phone"
+                           name="order_tel_phone"
                            placeholder="휴대전화"/>
                 </div>
                 주문인 이메일
                 <div class="bo4 of-hidden size15 m-b-20">
-                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="order_email"
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="order_email" name="order_email"
                            placeholder="이메일"/>
+                </div>
+
+                주문 비밀번호
+                <div class="bo4 of-hidden size15 m-b-20">
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="password" id="pw" name="pw"
+                           placeholder="주문 비밀번호"/>
                 </div>
 
                 <br/>
@@ -114,21 +127,30 @@
                     <input class="sizefull t-center" type="text" value="배송정보" readonly/>
                 </div>
 
+                <div class="size15">
+                    <label>주문정보와 동일
+                        <input type="checkbox" id="check"/>
+                        <div class="control-indicator"></div>
+                    </label>
+                </div>
+
                 수령인
                 <div class="bo4 of-hidden size15 m-b-20">
-                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="receiver_name"
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="receiver_name" name="receiver_name"
                            placeholder="이름"/>
                 </div>
 
                 수령인 일반전화
                 <div class="bo4 of-hidden size15 m-b-20">
-                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="receiver_tel_home"
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="receiver_tel_home"
+                           name="receiver_tel_home"
                            placeholder="일반전화"/>
                 </div>
 
                 수령인 휴대전화
                 <div class="bo4 of-hidden size15 m-b-20">
-                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="receiver_tel_phone"
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="receiver_tel_phone"
+                           name="receiver_tel_phone"
                            placeholder="휴대전화"/>
                 </div>
 
@@ -157,22 +179,24 @@
 
                 결제금액
                 <div class="bo4 of-hidden size15 m-b-20">
-                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="payment" placeholder="payment"
+                    <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="payment"
+                           placeholder="payment"
                            value="0"
                            readonly/>
+                    <input type="hidden" id="payment-hidden" name="payment"/>
                 </div>
 
                 결제수단
                 <div class="of-hidden size15 m-b-20">
                     <label class="btn btn-primary">
-                        <input type="radio" name="gender" value="kakaopay" checked="checked"> 카카오페이
+                        <input type="radio" name="pay_method" value="kakaopay" checked="checked"> 카카오페이
                     </label>
                 </div>
 
                 <div class="of-hidden size15 m-b-20">
                     <!-- Button -->
-                    <button id="joinbtn" class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
-                        결제허긔...
+                    <button id="orderbtn" class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+                        주문 및 결제 고고..
                     </button>
                 </div>
         </div>
@@ -185,21 +209,85 @@
 {% endblock %}
 
 {% block script %}
+<script src="/assets/vendor/jquery/jquery.serializeObject.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 $(document).ready(function(){
+
+    var orderform = $("#orderform");
+
+    // Daum 주소 검색 서비스
     $(".addr").click(function(e){
         e.preventDefault();
         var addr_input = $(this);
+        var id = $(this).attr("id").substring(0, $(this).attr("id").length -1);
 
         new daum.Postcode({
             oncomplete: function(data) {
                 addr_input.val(data.address + " (" + data.zonecode + ")");
+                $("#" + id).val(data.address + " (" + data.zonecode + ")");
             }
-    }).open();
+        }).open();
 
     });
 
+    // 숫자 타입에서 쓸 수 있도록 format() 함수 추가
+    Number.prototype.format = function(){
+        if(this==0) return 0;
+
+        var reg = /(^[+-]?\d+)(\d{3})/;
+        var n = (this + '');
+
+        while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+
+        return n;
+    };
+
+    // 주문 정보와 동일
+    $("#check").change(function(e){
+        e.preventDefault();
+        if($("#check").is(":checked")){
+            $("#receiver_name").val($("#order_name").val());
+            $("#deliver_addr1").val($("#order_addr1").val());
+            $("#deliver_addr2").val($("#order_addr2").val());
+            $("#deliver_addr").val($("#order_addr").val());
+            $("#receiver_tel_home").val($("#order_tel_home").val());
+            $("#receiver_tel_phone").val($("#order_tel_phone").val());
+        }
+    });
+
+    var payment = 0;
+    $(".total").each(function(){
+        $(this).html(($(this).data('total')).format() + "원");
+        payment += $(this).data('total');
+    });
+
+    $("#payment-hidden").val(payment);
+    $("#payment").val((payment).format() + "원");
+
+    // 주소 처리
+    $(".order_addr").change(function(e){
+        e.preventDefault();
+        $("#order_addr").val($("#order_addr1").val() + " " + $("#order_addr2").val());
+        console.log($("#order_addr").val());
+    });
+    $(".deliver_addr").change(function(e){
+        e.preventDefault();
+        $("#deliver_addr").val($("#deliver_addr").val() + " " + $("#deliver_addr").val());
+        console.log($("#deliver_addr").val());
+    });
+
+    // 주문 및 결제 버튼
+    $("#orderbtn").click(function(e){
+        e.preventDefault();
+
+        $("#test").val(JSON.stringify(orderform.serializeObject()));
+        orderform.attr("action","/shoppingmall/order").attr("method","post").submit();
+    });
+
 });
+
+
+
 </script>
 {% endblock %}

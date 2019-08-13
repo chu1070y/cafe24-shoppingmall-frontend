@@ -1,10 +1,10 @@
 import json
 
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect
 
 # Create your views here.
-from shoppingmall_frontend.utils import RestAPI
+from shoppingmall_frontend.utils import RestAPI, order_data
 
 rest_api = RestAPI()
 
@@ -64,8 +64,14 @@ def cart_del(request):
 
 def order(request):
     if 'authuser' not in request.session:
-
         return render(request, 'shoppingmall/404.html')
+
+    if request.method == "POST":
+        data = order_data(request.POST['test'])
+        result = rest_api.api_post("/api/order/add", json.dumps(data))
+        print(result)
+
+        return redirect('/shoppingmall/cart')
 
     cart_list = json.loads(rest_api.api_get("/api/cart/list", {
         "member_no": request.session['authuser']['no']
