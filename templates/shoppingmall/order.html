@@ -83,7 +83,9 @@
                 주문인 이름<br/>
                 <div class="bo4 size15 m-b-20">
                     <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="order_name" name="order_name"
-                           placeholder="이름"/>
+                           placeholder="이름" value="{{request.session.authuser.name}}"/>
+                    <input type="hidden" name="member_no"
+                           placeholder="이름" value="{{request.session.authuser.no}}"/>
                 </div>
 
                 <div class="of-hidden size2" style="height:25px">
@@ -101,18 +103,18 @@
                 주문인 일반전화
                 <div class="bo4 of-hidden size15 m-b-20">
                     <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="order_tel_home" name="order_tel_home"
-                           placeholder="일반전화"/>
+                           placeholder="일반전화" value="{{request.session.authuser.tel_home|default_if_none:''}}"/>
                 </div>
                 주문인 휴대전화
                 <div class="bo4 of-hidden size15 m-b-20">
                     <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="order_tel_phone"
                            name="order_tel_phone"
-                           placeholder="휴대전화"/>
+                           placeholder="휴대전화" value="{{request.session.authuser.tel_phone}}"/>
                 </div>
                 주문인 이메일
                 <div class="bo4 of-hidden size15 m-b-20">
                     <input class="sizefull s-text7 p-l-22 p-r-22" type="text" id="order_email" name="order_email"
-                           placeholder="이메일"/>
+                           placeholder="이메일" value="{{request.session.authuser.email}}" />
                 </div>
 
                 주문 비밀번호

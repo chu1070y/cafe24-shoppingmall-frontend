@@ -122,8 +122,8 @@ def product_code():
     return code
 
 
-def order_data(data):
-    result = json.loads(data)
+def order_data(request):
+    result = json.loads(request.POST['test'])
     result['order_code'] = order_code()
     result['status'] = '주문완료'
 
