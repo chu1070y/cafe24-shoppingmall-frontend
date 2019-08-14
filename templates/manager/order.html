@@ -1,0 +1,218 @@
+{% extends '../admin_base.html' %}
+{% block css %}
+<style>
+    .accordion-header-border-bottom .card-header .btn, .accordion-header-border-bottom .card-header a{
+        padding: 0;
+    }
+
+
+
+
+
+
+
+</style>
+
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="content">
+        <div class="breadcrumb-wrapper">
+            <h1>주문관리</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb p-0">
+                    <li>
+                        #주문이라능...
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="card card-default">
+                <div class="card-header card-header-border-bottom">
+                    <h2>주문 목록</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover ">
+                        <thead>
+                        <tr>
+                            <th scope="col">주문코드</th>
+                            <th scope="col">주문인</th>
+                            <th scope="col">휴대전화</th>
+                            <th scope="col">수령인</th>
+                            <th scope="col">배송지</th>
+                            <th scope="col">결제금액</th>
+                            <th scope="col">결제수단</th>
+                            <th scope="col">상태</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in order_list %}
+                        <tr>
+                            <td scope="row">{{order.order_code}}</td>
+                            <td>{{order.order_name}}</td>
+                            <td>{{order.order_tel_phone}}</td>
+                            <td>{{order.receiver_name}}</td>
+                            <td>{{order.deliver_addr}}</td>
+                            <td>{{order.payment}}</td>
+                            <td>{{order.pay_method}}</td>
+                            <td>{{order.status}}</td>
+                            <td style="padding: 3px;">
+                                <button type="button" class="mb-1 btn btn-tumblr btn-outline text modalBtn"
+                                        style="padding: 0px 10px 0px 10px;" data-no="{{order.no}}" data-toggle="modal"
+                                        data-target="#myModal">
+                                    상세
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Large Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLarge"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLarge">주문상세목록</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <table class="table table-hover ">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th scope="col">번호</th>
+                            <th scope="col">상품코드</th>
+                            <th scope="col">상품명</th>
+                            <th scope="col">옵션코드</th>
+                            <th scope="col">상품가격</th>
+                            <th scope="col">수량</th>
+                        </tr>
+                        </thead>
+                        <tbody id="modal-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body" style="display: none;" >
+    <div class="card-body">
+        <table class="table table-hover ">
+            <thead>
+            <tr>
+                <th></th>
+                <th scope="col">번호</th>
+                <th scope="col">상품코드</th>
+                <th scope="col">상품명</th>
+                <th scope="col">옵션코드</th>
+                <th scope="col">상품가격</th>
+                <th scope="col">수량</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="modal-body-form">
+                <th id="productImg"></th>
+                <th id="productNo"></th>
+                <th id="productCode"></th>
+                <th id="prductName"></th>
+                <th id="optionCode"></th>
+                <th id="productPrice"></th>
+                <th id="quantity"></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer class="footer mt-auto">
+    <div class="copyright bg-white">
+        <p>
+            &copy; <span id="copy-year">2019</span> Copyright Sleek Dashboard Bootstrap Template by
+            <a
+                    class="text-primary"
+                    href="http://www.iamabdus.com/"
+                    target="_blank"
+            >Abdus</a
+            >.
+        </p>
+    </div>
+    <script>
+                var d = new Date();
+                var year = d.getFullYear();
+                document.getElementById("copy-year").innerHTML = year;
+
+    </script>
+</footer>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+
+$(document).ready(function(){
+    var modalBody = $("#modal-body");
+
+    var order_list = {{json|safe}}
+
+    console.log(order_list);
+
+    $(".modalBtn").click(function(e){
+        e.preventDefault();
+
+        var no = $(this).data('no');
+
+        order_list.some(function(element){
+
+            if(element.no == no){
+                modalBody.html("");
+
+                var tmp_list = [];
+
+                element.orderDetail.some(function(element){
+                    $("#productImg").html("<img src='/media/" + element.orderInfo.productVO.productImgList[0].filename + "' style='height: 100px;'/>");
+                    $("#productNo").html(element.product_detail_no);
+                    $("#productCode").html(element.orderInfo.productVO.code);
+                    $("#prductName").html(element.orderInfo.productVO.name);
+                    $("#optionCode").html(element.orderInfo.option_code);
+                    $("#productPrice").html(element.price);
+                    $("#quantity").html(element.quantity);
+
+                    var clone = $("#modal-body-form").clone();
+                    clone.removeAttr("style");
+
+                    tmp_list.push(clone);
+                });// end element.orderDetail
+
+                tmp_list.some(function(element){
+                    modalBody.append(element);
+                });// end tmp_list
+
+                return true;
+            }
+        });// end order_list
+
+    });// end modalBtn
+
+});
+
+</script>
+{% endblock %}

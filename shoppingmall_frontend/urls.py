@@ -43,6 +43,7 @@ urlpatterns = [
     path('manager/login', admin_views.login),
     path('manager/logout', admin_views.logout),
     path('manager/product', admin_views.product),
+    path('manager/order', admin_views.order),
 
     path('manager/categoryadd', admin_views.categoryadd),
     path('manager/lowlist', admin_views.lowlist),

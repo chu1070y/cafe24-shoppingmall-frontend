@@ -62,7 +62,7 @@
                         <td class="column-3">
                             <form action="/shoppingmall/cart_del" method="post">
                                 {% csrf_token %}
-                                <input type="hidden" name="no" value={{cart.no}}/>
+                                <input type="hidden" name="no" value={{cart.no}} />
                                 <button type="submit" class="flex-c-m btn btn-danger btn-outline-danger">
                                     X
                                 </button>

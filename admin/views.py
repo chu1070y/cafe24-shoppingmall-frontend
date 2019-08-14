@@ -82,3 +82,9 @@ def lowlist(request):
     return HttpResponse(result, content_type='application/json')
 
 
+@login_decorator
+def order(request):
+    order_list = json.loads(rest_api.api_get("/api/order/getOrder"))
+
+    return render(request, 'manager/order.html',
+                  {'order_list': order_list['data'], 'json': json.dumps(order_list['data'])})
